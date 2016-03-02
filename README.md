@@ -1,3 +1,3 @@
 # NiftySort
 
-## proudly owned by James McIntyre, Jeff Tabachnick, and  Sanath Mullapudi
+## Proudly Owned by James McIntyre, Jeff Tabachnick, and  Sanath Mullapudi

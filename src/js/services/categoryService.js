@@ -3,9 +3,7 @@ app.factory('category', function($http){
 
   return {
 
-    find: function(userQuery) {
-
-
+    find: function(userQuery, callback) {
 
       if(userQuery === "headphones") {
         return {
@@ -22,14 +20,9 @@ app.factory('category', function($http){
 
       //TODO: Set up back end to receive get request
 
-
-      // $http.get('v1/category/'+ userQuery )
-      // .success(function(data) {
-      //   return data;
-      // })
-      // .fail(function(err) {
-      //   console.log('err');
-      // })
+      $http.get('v1/category/'+ userQuery )
+      .success(callback)
+      .fail(callback)
     }
   }
 

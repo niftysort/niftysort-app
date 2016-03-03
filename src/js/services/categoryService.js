@@ -1,29 +1,33 @@
 
-app.factory('category', function($http){
+app.factory('categoryService', function($http){
 
   return {
 
-    find: function(userQuery, callback) {
+    retrieveCategory: function(userQuery) {
 
-      if(userQuery === "headphones") {
-        return {
-          data: {
-            name: 'Headphones',
-            suggested: ['lightweight', 'loud', 'durable', 'fashionable']
-          }
-        }
-      } else {
-        return {
-          err: 'Error!'
-        }
-      }
+      // if(userQuery === "headphones") {
+      //   return {
+      //     data: {
+      //       name: 'Headphones',
+      //       suggested: ['lightweight', 'loud', 'durable', 'fashionable']
+      //     }
+      //   }
+      // } else {
+      //   return {
+      //     err: 'Error!'
+      //   }
+      // }
 
       //TODO: Set up back end to receive get request
 
-      $http.get('v1/category/'+ userQuery )
-      .success(callback)
-      .fail(callback)
+      return $http.get('/v1/categories/'+ userQuery);
+    },
+
+    retrieveAllCategories: function() {
+      return $http.get('/v1/categories');
     }
+
+    
   }
 
 })

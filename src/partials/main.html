@@ -4,7 +4,9 @@
 <button ng-click="getCategory()">Find</button>
 
 <div class="test" ng-show="foundCategory">
-  <p>Found {{ foundCategory.data.name }} </p>
+  <p>Found {{ foundCategory.data.name }}</p>
+  <input ng-model="attribute" type="text">
+	<button ng-click="getGraph()">GraphIt!</button>
 </div>
 
 <!-- <div class="test" ng-show="foundCategory.err">

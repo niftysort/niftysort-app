@@ -27,6 +27,16 @@ router.get('/', function(req, res, next) {
 	})
 })
 
+router.get('/:categoryId/:attribute', function(req, res, next) {
+	var categoryId = req.params.category;
+	var attribute = req.params.attribute;
 
+	Category.retrieveGraph(categoryId, attribute, function(err, graphData) {
+		if (err) {
+			return res.status(400).send(err);
+		}
+		return res.status(200).send(graphData);
+	})
+})
 
 module.exports = router;

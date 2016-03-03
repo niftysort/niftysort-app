@@ -1,5 +1,5 @@
 
-app.controller('mainCtrl', function(categoryService, $scope){
+app.controller('mainCtrl', function(categoryService, graphService, $scope){
   console.log('main controller loaded!');
 
   //FIXME: Do not delete, for later use
@@ -23,7 +23,13 @@ app.controller('mainCtrl', function(categoryService, $scope){
   }
 
   $scope.getGraph = function() {
-  	
+  	graphService.retrieveGraph($scope.foundCategory._id, $scope.attribute)
+  	.then(function(data) {
+  		$scope.graphData = data;
+  	}, function(err) {
+  		$scope.graphData = null;
+  		console.log(err);
+  	}
   }
 
 });

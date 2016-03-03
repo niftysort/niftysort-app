@@ -3,17 +3,27 @@ app.factory('category', function($http){
 
   return {
 
-    find: function() {
+    find: function(userQuery) {
 
 
-      return {
-        name: 'Headphones',
-        suggested: ['lightweight', 'loud', 'durable', 'fashionable']
+
+      if(userQuery === "headphones") {
+        return {
+          data: {
+            name: 'Headphones',
+            suggested: ['lightweight', 'loud', 'durable', 'fashionable']
+          }
+        }
+      } else {
+        return {
+          err: 'Error!'
+        }
       }
 
       //TODO: Set up back end to receive get request
 
-      // $http.get('v1/category/')
+
+      // $http.get('v1/category/'+ userQuery )
       // .success(function(data) {
       //   return data;
       // })

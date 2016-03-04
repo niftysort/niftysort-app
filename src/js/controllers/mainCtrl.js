@@ -4,17 +4,19 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   //FIXME: Do not delete, for later use
 
-  // categoryService.retrieveAllCategories()
-  // .then(function(data) {
-  // 	$scope.allCategories = data;
-  // }, function(err) {
-  // 	console.log(err);
-  // })
+  categoryService.retrieveAllCategories()
+  .then(function(resp) {
+  	$scope.allCategories = resp.data;
+  }, function(err) {
+  	console.log(err);
+  })
 
-  // TODO: change from hardcoded to user input:
-  $scope.foundCategory = {
-    _id: '56da00ed51f20c82dbdfa761'
-  };
+  $scope.pickCategory = function() {
+    $scope.category = {
+      id: this.value._id,
+      name: this.value.name
+    }
+  }
 
   $scope.getCategory = function() {
     categoryService.retrieveCategory($scope.category)
@@ -27,11 +29,15 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   }
 
   $scope.getGraph = function() {
-  	graphService.retrieveGraph($scope.foundCategory._id, $scope.attribute)
+  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
   	.then(function(resp) {
-  		$scope.data = resp.data;
+      if ($scope.data) {
+        $scope.data.push(resp.data);
+      } else {
+        $scope.data = [resp.data];
+      }
   	}, function(err) {
-  		$scope.data = null;
+  		$scope.data = [];
   		console.log('err ',err);
   	})
   }

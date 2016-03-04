@@ -6,6 +6,17 @@ var Product = require('../models/product');
 
 /* GET category */
 
+// Get all categories
+// Refactor the database query into the model
+router.get('/', function(req, res, next) {
+	Category.find({}, function(err, categories) {
+		if (err || !categories) {
+			return res.status(400).send(err || 'No Categories');
+		}
+		return res.status(200).send(categories);
+	})
+});
+
 router.get('/:userQuery', function(req, res, next) {
 	var categoryQuery = req.params.userQuery;
 

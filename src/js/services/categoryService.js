@@ -27,7 +27,7 @@ app.factory('categoryService', function($http){
       return $http.get('/v1/categories');
     }
 
-    
+
   }
 
 })

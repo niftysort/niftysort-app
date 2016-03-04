@@ -1,15 +1,28 @@
 
+<div class="container">
+  <div ng-show'allCategories'>
+    <h3 class='text-center'>Possible Categories</h3>
+    <ul class="list-inline">
+      <li ng-repeat='value in allCategories'>
+        <a ng-click='pickCategory()' class="btn btn-info">{{value.name}}</a>
+      </li>
+    </ul>
+  </div>
 
-<input ng-model="category" type="text">
-<button ng-click="getCategory()">Find</button>
+  <!-- <input ng-model="category" type="text">
+  <button ng-click="getCategory()">Find</button> -->
 
-<div class="test" ng-show="foundCategory">
-  <p>Found {{ foundCategory.data.name }}</p>
-  <input ng-model="attribute" type="text">
-	<button ng-click="getGraph()">GraphIt!</button>
+
+  <form ng-submit="getGraph()" class="form-inline " ng-show="category">
+    <div class="form-group">
+      <h4>Category: {{ category.name }}</h4>
+      <input class="form-control" ng-model="attribute" type="text" placeholder="attribute">
+    	<button class="btn btn-success" type='submit'>GraphIt!</button>
+    </div>
+  </form>
+
+  <nvd3 options="options" data="data"></nvd3>
 </div>
-
-<nvd3 options="options" data="data"></nvd3>
 
 <!-- <div class="test" ng-show="foundCategory.err">
   <p>Oops! {{ foundCategory.err }} </p>

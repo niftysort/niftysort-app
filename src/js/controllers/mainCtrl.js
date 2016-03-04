@@ -30,13 +30,52 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   $scope.getGraph = function() {
   	graphService.retrieveGraph($scope.foundCategory._id, $scope.attribute)
-  	.then(function(data) {
-  		$scope.graphData = data;
-      console.log($scope.graphData);
+  	.then(function(resp) {
+  		$scope.data = resp.data;
   	}, function(err) {
-  		// $scope.graphData = null;
+  		$scope.data = null;
   		console.log('err ',err);
   	})
   }
+
+  $scope.options = {
+    chart: {
+        type: 'scatterChart',
+        height: 450,
+        color: d3.scale.category10().range(),
+        scatter: {
+            onlyCircles: false
+        },
+        showDistX: true,
+        showDistY: true,
+      //tooltipContent: function(d) {
+      //    return d.series && '<h3>' + d.series[0].key + '</h3>';
+      //},
+        duration: 350,
+        xAxis: {
+            axisLabel: 'X Axis',
+            tickFormat: function(d){
+                return d3.format('.02f')(d);
+            }
+        },
+        yAxis: {
+            axisLabel: 'Y Axis',
+            tickFormat: function(d){
+                return d3.format('.02f')(d);
+            },
+            axisLabelDistance: -5
+        },
+        zoom: {
+            //NOTE: All attributes below are optional
+            enabled: true,
+            scaleExtent: [1, 10],
+            useFixedDomain: false,
+            useNiceScale: true,
+            horizontalOff: false,
+            verticalOff: false,
+            unzoomEventType: 'dblclick.zoom'
+        }
+    }
+  };
 
 });

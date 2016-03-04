@@ -13,10 +13,8 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   // TODO: change from hardcoded to user input:
   $scope.foundCategory = {
-    _id: '56d9ecfe3c90686bd0557e61'
+    _id: '56da00ed51f20c82dbdfa761'
   };
-
-
 
   $scope.getCategory = function() {
     categoryService.retrieveCategory($scope.category)
@@ -48,9 +46,9 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         },
         showDistX: true,
         showDistY: true,
-      //tooltipContent: function(d) {
-      //    return d.series && '<h3>' + d.series[0].key + '</h3>';
-      //},
+      tooltipContent: function(d) {
+         return d.series && '<h3>' + d.series[0].key + '</h3>';
+      },
         duration: 350,
         xAxis: {
             axisLabel: 'X Axis',

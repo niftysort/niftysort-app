@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-// var Category = require('../models/category');
+var Category = require('../models/category');
+var Product = require('../models/product');
 
 /* GET category */
 
@@ -27,16 +28,17 @@ router.get('/', function(req, res, next) {
 	})
 })
 
-router.get('/:categoryId/:attribute', function(req, res, next) {
-	var categoryId = req.params.category;
-	var attribute = req.params.attribute;
+// FIXME: eventually make multiple attributes input acceptable
+router.get('/:categoryId/:attributes', (req, res, next) => {
+  var categoryId = req.params.categoryId;
+  var attributes = req.params.attributes;
 
-	Category.retrieveGraph(categoryId, attribute, function(err, graphData) {
+  Category.getD3DataByAttribute(categoryId, attributes, function(err, D3FormatedData) {
 		if (err) {
 			return res.status(400).send(err);
 		}
-		return res.status(200).send(graphData);
-	})
+		return res.status(200).send(D3FormatedData);
+	});
 })
 
 module.exports = router;

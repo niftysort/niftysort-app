@@ -11,13 +11,19 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   // 	console.log(err);
   // })
 
+  // TODO: change from hardcoded to user input:
+  $scope.foundCategory = {
+    _id: '56d9ecfe3c90686bd0557e61'
+  };
+
+
 
   $scope.getCategory = function() {
     categoryService.retrieveCategory($scope.category)
     .then(function(data) {
-    	$scope.foundCategory = data;
+    	// $scope.foundCategory = data;
     }, function(err) {
-    	$scope.foundCategory = null;
+    	// $scope.foundCategory = null;
     	console.log(err);
     })
   }
@@ -26,10 +32,11 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   	graphService.retrieveGraph($scope.foundCategory._id, $scope.attribute)
   	.then(function(data) {
   		$scope.graphData = data;
+      console.log($scope.graphData);
   	}, function(err) {
-  		$scope.graphData = null;
-  		console.log(err);
-  	}
+  		// $scope.graphData = null;
+  		console.log('err ',err);
+  	})
   }
 
 });

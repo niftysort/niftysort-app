@@ -1,15 +1,29 @@
+'use strict';
+
 var express = require('express');
+var dotenv = require('dotenv').config();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose  = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var categories = require('./routes/categories');
 
 var app = express();
+
+// sets up mongoose database for remote (Heroku deployment) or local development
+var mongoUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/amazonReviewsAPI';
+mongoose.connect(mongoUrl, function(err) {
+  if(err) {
+    console.log("Mongo error: ", err);
+  } else {
+    console.log(`MongoDB connected to ${mongoUrl}`);
+  }
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

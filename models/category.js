@@ -1,4 +1,5 @@
 'use strict';
+// lastupdate: added productID, friday March 4th, 10:43pm
 
 var mongoose  = require('mongoose');
 
@@ -36,7 +37,8 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 			x: adjustedPerProductScore,
 			y: product.info.price,
 			size: 2,
-			shape: 'circle'
+			shape: 'circle',
+			productID: product._id
 		}
 		return d3Values;
 	}

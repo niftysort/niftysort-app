@@ -28,19 +28,61 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     })
   }
 
-  $scope.getGraph = function() {
-  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
-  	.then(function(resp) {
+  // $scope.getGraph = function() {
+  // 	graphService.retrieveGraph($scope.category.id, $scope.attribute)
+  // 	.then(function(resp) {
+  //     if ($scope.data) {
+  //       $scope.data.push(resp.data);
+  //     } else {
+  //       $scope.data = [resp.data];
+  //     }
+  // 	}, function(err) {
+  // 		$scope.data = [];
+  // 		console.log('err ',err);
+  // 	})
+  // }
+
+
+    graphService.retrieveGraph('56d9ecfe3c90686bd0557e61', 'red')
+    .then(function(resp) {
       if ($scope.data) {
         $scope.data.push(resp.data);
       } else {
-        $scope.data = [resp.data];
+
+        sortByRatingAndPrice(resp);
+        
+        
       }
-  	}, function(err) {
-  		$scope.data = [];
-  		console.log('err ',err);
-  	})
-  }
+    }, function(err) {
+      $scope.data = [];
+      console.log('err ',err);
+    })
+
+    function sortByRatingAndPrice(resp) {
+      var numResults = 8;
+      resp.data.values.sort(function(a,b) {
+        return b.y - a.y
+      });
+      // console.log(resp.data.values);
+      var topPoints = {};
+      topPoints.values = resp.data.values.slice(0, numResults);
+      scaleByRating(topPoints);
+    }
+
+    function scaleByRating(topPoints) {
+      console.log(topPoints.values);
+      var size = topPoints.values.length;
+      console.log(size);
+      topPoints.values.forEach(function(val) {
+        val.size += size;
+        console.log(val);
+        size--;
+      })
+      console.log(topPoints);
+
+      $scope.data = [topPoints];
+    }
+
 
   $scope.options = {
     chart: {
@@ -52,6 +94,11 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         },
         showDistX: true,
         showDistY: true,
+        showXAxis: true,
+        showYAxis: true,
+        padData: true,
+        padDataOuter: 1,
+        showLegend: false,
       tooltipContent: function(d) {
          return d.series && '<h3>' + d.series[0].key + '</h3>';
       },

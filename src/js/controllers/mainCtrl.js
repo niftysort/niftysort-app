@@ -16,6 +16,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
       id: this.value._id,
       name: this.value.name
     }
+    console.log($scope.category.id);
   }
 
   $scope.getCategory = function() {
@@ -28,19 +29,45 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     })
   }
 
-  $scope.getGraph = function() {
-  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
-  	.then(function(resp) {
+  // $scope.getGraph = function() {
+  // 	graphService.retrieveGraph($scope.category.id, $scope.attribute)
+  // 	.then(function(resp) {
+  //     if ($scope.data) {
+  //       $scope.data.push(resp.data);
+  //     } else {
+  //       $scope.data = [resp.data];
+  //     }
+  // 	}, function(err) {
+  // 		$scope.data = [];
+  // 		console.log('err ',err);
+  // 	})
+  // }
+
+    graphService.retrieveGraph('56d9ecfe3c90686bd0557e61', 'red')
+    .then(function(resp) {
       if ($scope.data) {
         $scope.data.push(resp.data);
       } else {
+        // resp.data.values.sort(function(a, b) {
+        //   return b.x - a.x;
+        // })
+        // console.log(resp.data);
+        // var size = 98;
+        // resp.data.values.forEach(function(val) {
+        //   val.size += size;
+        //   size = size / 3;
+        // })
+        // resp.data.values[0].size = 7;
+        // resp.data.values[3].size = 1400;
         $scope.data = [resp.data];
       }
-  	}, function(err) {
-  		$scope.data = [];
-  		console.log('err ',err);
-  	})
-  }
+    }, function(err) {
+      $scope.data = [];
+      console.log('err ',err);
+    })
+
+
+
 
   $scope.options = {
     chart: {
@@ -52,6 +79,14 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         },
         showDistX: true,
         showDistY: true,
+        showXAxis: true,
+        showYAxis: true,
+        pointShape: 'circle',
+        // pointSize: 0.5,
+        // showDistX: false,
+        // showDistY: false,
+        // showXAxis: false,
+        // showYAxis: false,
       tooltipContent: function(d) {
          return d.series && '<h3>' + d.series[0].key + '</h3>';
       },

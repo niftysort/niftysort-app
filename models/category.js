@@ -35,7 +35,7 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 		var d3Values = {
 			x: adjustedPerProductScore,
 			y: product.info.price,
-			size: 2,
+			size: 5,
 			shape: 'circle'
 		}
 		return d3Values;

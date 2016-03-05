@@ -1,3 +1,25 @@
 body {
 	font-family: sans-serif;
 }
+
+	.nv-path-class1 {
+		// fill: url(#imgpattern) !important;
+		// fill: rert !important;
+		// fill-opacity: 1 !important;
+		display: none !important;
+		stroke-opacity: 0;
+	}
+
+	.nv-point-1 {
+		fill: url(#imgpattern) !important;
+		stroke-opacity:0;
+		// transform:scale(3);
+		// fill-opacity: 1 !important;
+	}
+
+// path {
+// 	transform:scale(3,3);
+// }
+// path {
+// 	fill: red;
+// }

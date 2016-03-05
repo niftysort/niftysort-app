@@ -35,6 +35,7 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 		var d3Values = {
 			y: adjustedPerProductScore,
 			x: -product.info.price, // reversed x and y and format price negative
+			xR: product.info.price,
 			size: 1, // Changed size from 2 to 1
 			shape: 'circle'
 		}

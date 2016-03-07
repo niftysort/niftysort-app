@@ -2,8 +2,6 @@
 app.controller('mainCtrl', function(categoryService, graphService, $scope){
   console.log('main controller loaded!');
 
-  //FIXME: Do not delete, for later use
-
   categoryService.retrieveAllCategories()
   .then(function(resp) {
   	$scope.allCategories = resp.data;
@@ -28,19 +26,59 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     })
   }
 
-  $scope.getGraph = function() {
-  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
-  	.then(function(resp) {
+  // $scope.getGraph = function() {
+  // 	graphService.retrieveGraph($scope.category.id, $scope.attribute)
+  // 	.then(function(resp) {
+  //     if ($scope.data) {
+  //       $scope.data.push(resp.data);
+  //     } else {
+  //       $scope.data = [resp.data];
+  //     }
+  // 	}, function(err) {
+  // 		$scope.data = [];
+  // 		console.log('err ',err);
+  // 	})
+  // }
+
+
+    graphService.retrieveGraph('56d9ecfe3c90686bd0557e61', 'taste')
+    .then(function(resp) {
       if ($scope.data) {
         $scope.data.push(resp.data);
       } else {
-        $scope.data = [resp.data];
+        sortByRatingAndPrice(resp);
       }
-  	}, function(err) {
-  		$scope.data = [];
-  		console.log('err ',err);
-  	})
-  }
+    }, function(err) {
+      $scope.data = [];
+      console.log('err ',err);
+    })
+
+    function sortByRatingAndPrice(resp) {
+      var numResults = 10;
+      var slider = 5;
+
+      var maxX = resp.data.values.reduce(function(prev, curr) {
+        return (prev.xR > curr.xR) ? prev : curr;
+      });
+
+      var maxY = resp.data.values.reduce(function(prev, curr) {
+        return (prev.y > curr.y) ? prev : curr;
+      }); 
+
+      resp.data.values.sort(function(a,b) {
+        return ( b.y/maxY.y*slider + (1-(b.xR/maxX.xR))*(10-slider) ) - ( a.y/maxY.y*slider + (1-(a.xR/maxX.xR))*(10-slider) )
+      });
+
+      var topPoints = {};
+      topPoints.values = resp.data.values.slice(0, numResults);
+      var size = topPoints.values.length;
+      topPoints.values.forEach(function(val) {
+        val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
+        val.size = val.rating;
+      })
+      $scope.data = [topPoints];
+    }
+
 
   $scope.options = {
     chart: {
@@ -50,11 +88,22 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         scatter: {
             onlyCircles: false
         },
-        showDistX: true,
-        showDistY: true,
-      tooltipContent: function(d) {
-         return d.series && '<h3>' + d.series[0].key + '</h3>';
-      },
+        showDistX: false,
+        showDistY: false,
+        showXAxis: false,
+        showYAxis: false,
+        padData: true,
+        padDataOuter: 0,
+        showLegend: false,
+        useInteractiveGuideline: false,
+        // forceY: [0],
+
+        tooltip: {
+          contentGenerator: function(key, x, y, e) {
+            return '<h3>Rating: ' + key.point.rating.toFixed(2) + '</h3><h4>Price: $' + key.point.xR + '</xR>'
+          }
+        },
+
         duration: 350,
         xAxis: {
             axisLabel: 'X Axis',

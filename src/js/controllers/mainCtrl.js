@@ -4,80 +4,62 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   categoryService.retrieveAllCategories()
   .then(function(resp) {
-  	$scope.allCategories = resp.data;
+    var categoryNames = resp.data.map(function(val) {
+      return val.name;
+    })
+    console.log('Possible categories: ', categoryNames);
   }, function(err) {
   	console.log(err);
   })
 
-  $scope.pickCategory = function() {
-    $scope.category = {
-      id: this.value._id,
-      name: this.value.name
-    }
-  }
-
   $scope.getCategory = function() {
-    categoryService.retrieveCategory($scope.category)
-    .then(function(data) {
-    	// $scope.foundCategory = data;
+    categoryService.retrieveCategory($scope.searchCategory)
+    .then(function(resp) {
+      $scope.category = {
+        id: resp.data._id,
+        name: resp.data.name
+      }
     }, function(err) {
-    	// $scope.foundCategory = null;
+    	$scope.category = null;
     	console.log(err);
     })
   }
 
-  // $scope.getGraph = function() {
-  // 	graphService.retrieveGraph($scope.category.id, $scope.attribute)
-  // 	.then(function(resp) {
-  //     if ($scope.data) {
-  //       $scope.data.push(resp.data);
-  //     } else {
-  //       $scope.data = [resp.data];
-  //     }
-  // 	}, function(err) {
-  // 		$scope.data = [];
-  // 		console.log('err ',err);
-  // 	})
-  // }
+  $scope.getGraph = function() {
+  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
+  	.then(function(resp) {
+      sortByRatingAndPrice(resp.data);
+  	}, function(err) {
+  		$scope.data = [];
+  		console.log('err ',err);
+  	})
+  }
 
+  function sortByRatingAndPrice(data) {
+    var numResults = 10;
+    var slider = 5;
 
-    graphService.retrieveGraph('56d9ecfe3c90686bd0557e61', 'taste')
-    .then(function(resp) {
-      if ($scope.data) {
-        $scope.data.push(resp.data);
-      } else {
-        sortByRatingAndPrice(resp);
-      }
-    }, function(err) {
-      $scope.data = [];
-      console.log('err ',err);
+    var maxX = data.values.reduce(function(prev, curr) {
+      return (prev.xR > curr.xR) ? prev : curr;
+    });
+
+    var maxY = data.values.reduce(function(prev, curr) {
+      return (prev.y > curr.y) ? prev : curr;
+    });
+
+    data.values.sort(function(a,b) {
+      return ( b.y/maxY.y*slider + (1-(b.xR/maxX.xR))*(10-slider) ) - ( a.y/maxY.y*slider + (1-(a.xR/maxX.xR))*(10-slider) )
+    });
+
+    var topPoints = {};
+    topPoints.values = data.values.slice(0, numResults);
+    var size = topPoints.values.length;
+    topPoints.values.forEach(function(val) {
+      val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
+      val.size = val.rating;
     })
-
-    function sortByRatingAndPrice(resp) {
-      var numResults = 10;
-      var slider = 5;
-
-      var maxX = resp.data.values.reduce(function(prev, curr) {
-        return (prev.xR > curr.xR) ? prev : curr;
-      });
-
-      var maxY = resp.data.values.reduce(function(prev, curr) {
-        return (prev.y > curr.y) ? prev : curr;
-      }); 
-
-      resp.data.values.sort(function(a,b) {
-        return ( b.y/maxY.y*slider + (1-(b.xR/maxX.xR))*(10-slider) ) - ( a.y/maxY.y*slider + (1-(a.xR/maxX.xR))*(10-slider) )
-      });
-
-      var topPoints = {};
-      topPoints.values = resp.data.values.slice(0, numResults);
-      var size = topPoints.values.length;
-      topPoints.values.forEach(function(val) {
-        val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
-        val.size = val.rating;
-      })
-      $scope.data = [topPoints];
-    }
+    $scope.data = [topPoints];
+  }
 
 
   $scope.options = {
@@ -88,10 +70,10 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         scatter: {
             onlyCircles: false
         },
-        showDistX: false,
-        showDistY: false,
-        showXAxis: false,
-        showYAxis: false,
+        showDistX: true,
+        showDistY: true,
+        showXAxis: true,
+        showYAxis: true,
         padData: true,
         padDataOuter: 0,
         showLegend: false,
@@ -100,21 +82,22 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
         tooltip: {
           contentGenerator: function(key, x, y, e) {
+            console.log(key);
             return '<h3>Rating: ' + key.point.rating.toFixed(2) + '</h3><h4>Price: $' + key.point.xR + '</xR>'
           }
         },
 
         duration: 350,
         xAxis: {
-            axisLabel: 'X Axis',
+            axisLabel: 'Price',
             tickFormat: function(d){
-                return d3.format('.02f')(d);
+              return d3.format('.02f')(d);
             }
         },
         yAxis: {
-            axisLabel: 'Y Axis',
+            axisLabel: 'Attribute Match Index',
             tickFormat: function(d){
-                return d3.format('.02f')(d);
+              return d3.format('.02f')(d);
             },
             axisLabelDistance: -5
         },

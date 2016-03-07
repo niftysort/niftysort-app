@@ -9,23 +9,22 @@ var Product = require('../models/product');
 // Get all categories
 // Refactor the database query into the model
 router.get('/', function(req, res, next) {
-	Category.find({}, function(err, categories) {
-		if (err || !categories) {
-			return res.status(400).send(err || 'No Categories');
+	Category.find({}, function(err, foundCategories) {
+		if (err || !foundCategories) {
+			return res.status(400).send(err || 'No Categories.');
 		}
-		return res.status(200).send(categories);
+		return res.status(200).send(foundCategories);
 	})
 });
 
 router.get('/:userQuery', function(req, res, next) {
 	var categoryQuery = req.params.userQuery;
-
-	Category.retrieveOne(categoryQuery, function(err, foundCategory) {
-		if (err) {
-			return res.status(400).send(err);
+	Category.findOne({name:categoryQuery}, function(err, foundCategory) {
+		if (err || !foundCategory) {
+			return res.status(400).send(err || 'Category not found.');
 		}
 		return res.status(200).send(foundCategory);
-	});
+	})
 });
 
 //FIXME: Do not delete, for later use

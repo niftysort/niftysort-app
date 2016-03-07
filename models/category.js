@@ -34,6 +34,7 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 		var adjustedPerProductScore = aggregateAttributeScore/totalReviews;
 
 		var d3Values = {
+			name: product.info.name,
 			x: -product.info.price, // reversed x and y and format price negative
 			y: adjustedPerProductScore,
 			xR: product.info.price,

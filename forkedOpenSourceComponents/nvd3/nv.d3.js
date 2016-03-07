@@ -11673,7 +11673,7 @@ nv.models.scatter = function() {
                 .attr('transform', function(d) {
                     //nv.log(d, getX(d[0],d[1]), x(getX(d[0],d[1])));
 // MODIFIED D3: to scale dots
-                    return 'translate(' + nv.utils.NaNtoZero(x(getX(d[0],d[1]))) + ',' + nv.utils.NaNtoZero(y(getY(d[0],d[1]))) + '), scale(3)'
+                    return 'translate(' + nv.utils.NaNtoZero(x(getX(d[0],d[1]))) + ',' + nv.utils.NaNtoZero(y(getY(d[0],d[1]))) + '), scale(2)'
                 })
                 .attr('d',
                     nv.utils.symbol()

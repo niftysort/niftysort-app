@@ -37,11 +37,16 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   $scope.autoFill= function(categoryInput) {
 
+    // on right arrow key up
+    if (event.keyCode === 39) {
+      this.searchCategory = $scope.autoComplete;
+    }
+
     if (categoryInput) {
       var filteredCategories = $scope.categoryNames.filter(function(val) {
         return val.slice(0, categoryInput.length) === categoryInput;
       });
-      
+
       $scope.autoComplete = filteredCategories.sort()[0];
     } else {
       $scope.autoComplete = '';

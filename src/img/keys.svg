@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="504px" height="473px" viewBox="0 0 504 473" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>keys</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Latest-Attempt" transform="translate(-197.000000, -71.000000)">
+            <g id="keys" transform="translate(163.000000, 68.000000)">
+                <g id="bottom-keys" transform="translate(89.000000, 466.000000)">
+                    <text id="EXPENSIVE-Copy" opacity="0.376340951" font-family="OpenSans-Bold, Open Sans" font-size="8.21000004" font-weight="bold" letter-spacing="0.438666344" fill="#ABABAB">
+                        <tspan x="0" y="9">EXPENSIVE</tspan>
+                    </text>
+                    <text id="CHEAP" opacity="0.376340951" font-family="OpenSans-Bold, Open Sans" font-size="8.21000004" font-weight="bold" letter-spacing="0.438666344" fill="#ABABAB">
+                        <tspan x="420.260513" y="9">CHEAP</tspan>
+                    </text>
+                    <g id="line-arrow" transform="translate(86.000000, 2.000000)">
+                        <path d="M8,4 L268.511993,4" id="Line" stroke="#EAEAEA" stroke-linecap="square"></path>
+                        <polygon id="Triangle-1" fill="#E7E7E7" transform="translate(4.000000, 4.000000) scale(-1, 1) rotate(-270.000000) translate(-4.000000, -4.000000) " points="4 0 8 8 0 8 "></polygon>
+                        <polygon id="Triangle-1-Copy" fill="#E7E7E7" transform="translate(273.000000, 4.000000) rotate(-270.000000) translate(-273.000000, -4.000000) " points="273 0 277 8 269 8 "></polygon>
+                    </g>
+                </g>
+                <g id="side-keys">
+                    <g id="line-arrow" transform="translate(65.000000, 236.500000) rotate(-270.000000) translate(-65.000000, -236.500000) translate(-73.500000, 232.500000)">
+                        <path d="M8,4 L268.511993,4" id="Line" stroke="#EAEAEA" stroke-linecap="square"></path>
+                        <polygon id="Triangle-1" fill="#E7E7E7" transform="translate(4.000000, 4.000000) scale(-1, 1) rotate(-270.000000) translate(-4.000000, -4.000000) " points="4 8.52651283e-14 8 8 0 8 "></polygon>
+                        <polygon id="Triangle-1-Copy" fill="#E7E7E7" transform="translate(273.000000, 4.000000) rotate(-270.000000) translate(-273.000000, -4.000000) " points="273 2.84217094e-14 277 8 269 8 "></polygon>
+                    </g>
+                    <text id="meh" opacity="0.376340951" font-family="OpenSans-Bold, Open Sans" font-size="8.21000004" font-weight="bold" letter-spacing="0.438666344" fill="#ABABAB">
+                        <tspan x="54.7607507" y="453">meh</tspan>
+                    </text>
+                    <text id="PERFECT!" opacity="0.608558769" font-family="OpenSans-Bold, Open Sans" font-size="8.21000004" font-weight="bold" letter-spacing="0.438666344" fill="#FFFFFF">
+                        <tspan x="34" y="9">PERFECT!</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

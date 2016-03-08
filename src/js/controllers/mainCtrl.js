@@ -25,6 +25,10 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     })
   }
 
+
+
+
+
   $scope.getGraph = function() {
   	graphService.retrieveGraph($scope.category.id, $scope.attribute)
   	.then(function(resp) {
@@ -84,15 +88,24 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   $scope.options = {
     chart: {
         type: 'scatterChart',
-        height: 450,
+        width: '100%',
         color: d3.scale.category10().range(),
         scatter: {
             onlyCircles: false
         },
-        showDistX: true,
-        showDistY: true,
-        showXAxis: true,
-        showYAxis: true,
+        dispatch: {
+            renderEnd: function(e){
+              // var renderedChart = angular.element(document.querySelector('.nvd3-svg'))[0];
+              var renderedWidth = angular.element(document.querySelector('.nvd3-svg'))[0].clientWidth;
+              // angular.element(document.querySelector('.nvd3-svg'))[0].css('height', renderedWidth);
+              angular.element(document.querySelector('.nvd3-svg'))[0].style.height = renderedWidth;
+              // console.log(test22);
+            }
+        },
+        showDistX: false,
+        showDistY: false,
+        showXAxis: false,
+        showYAxis: false,
         padData: true,
         padDataOuter: 0,
         showLegend: false,

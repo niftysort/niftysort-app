@@ -1,10 +1,55 @@
-<hr>
+
+
+<div class="header-bg"><img src="/img/header-abstract.svg" id="header-bg-logo"><img src="/img/test.svg" class="header-gradient"></div>
 
 <div class="container">
+  <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="header-block">
+                            <div class="logo-block"><img src="/img/white-logo.svg" id="white-logo">
+                                <div id="brand-top">Nifty Sort</div>
+                            </div>
+                            <div id="query-input-contain">
+                                <textarea placeholder="lightweight durable headphones under $300" id="user-query" autofocus=""></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="chart-contain">
+                            <div id="chart-contain">
+                              <!-- <img class="img-responsive graph" src="/img/graph-placeholder.png"> -->
+                          <nvd3 options="options" data="data"></nvd3>
+                            <div id="left-top-label"><span class="hidden-md hidden-lg graph-label-text">PERFECT! </span><span class="hidden-xs hidden-sm graph-label-text" id="white-text">PERFECT! </span></div>
+                            <div id="left-midde-label"><img class="hidden-xs hidden-sm" src="/img/vert-line-arrow.svg" id="vert-line"></div>
+                            <div id="left-bottom-label"><span class="graph-label-text">JUST OK</span></div>
+                            <div id="bottom-left-label"><span id="no-float" class="graph-label-text">EXPENSIVE </span></div>
+                            <div id="bottom-middle-label"><img class="hidden-xs hidden-sm" src="/img/vert-line-arrow.svg" id="horiz-line"></div>
+                            <div id="bottom-right-label"><span class="graph-label-text">CHEAP! </span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="test1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
 
   <form ng-submit="getCategory()" class="form-inline ">
     <div class="form-group overlayWrapper">
-      <!-- <h4>Enter Category</h4> -->
+
       <input class="form-control categoryOverlay1" type="text" placeholder="{{autoComplete}}">
       <input class="form-control categoryOverlay2" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" type="text" >
     	<button class="form-control btn btn-success" type='submit'>Find Category</button>
@@ -19,6 +64,6 @@
     </div>
   </form>
 
-  <nvd3 options="options" data="data"></nvd3>
+
 
 </div>

@@ -76,16 +76,21 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
     var topPoints = {};
     topPoints.values = data.values.slice(0, numResults);
+    topPoints.key = data.key;
     var size = topPoints.values.length;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
       val.size = val.rating;
+      val.series = 0;
     })
+    // console.log([topPoints]);
     $scope.data = [topPoints];
-  }
+  //   $scope.data = [{
+  //   key: 'Group 1',
+  //   values: [{x: 3, y: 3, size: 2, shape: 'circle'}, {x: 2, y: 1, size: 5, shape: 'circle'},  {x: 1.5, y: 0.5, size: 3, shape: 'circle'}]
+  // }];
 
-
-  $scope.options = {
+    $scope.options = {
     chart: {
         type: 'scatterChart',
         height: '100%',
@@ -102,14 +107,14 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
               // console.log(test22);
             }
         },
-        showDistX: true,
-        showDistY: true,
+        showDistX: false,
+        showDistY: false,
         showXAxis: true,
         showYAxis: true,
         padData: true,
         padDataOuter: 0,
         showLegend: false,
-        useInteractiveGuideline: false,
+        useInteractiveGuideline: true,
         // forceY: [0],
 
         tooltip: {
@@ -121,15 +126,15 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
         duration: 350,
         xAxis: {
-            axisLabel: 'Price',
+            axisLabel: '',
             tickFormat: function(d){
-              return d3.format('.02f')(d);
+              return '';
             }
         },
         yAxis: {
-            axisLabel: 'Attribute Match Index',
+            axisLabel: '',
             tickFormat: function(d){
-              return d3.format('.02f')(d);
+              return '';
             },
             axisLabelDistance: -5
         },
@@ -145,5 +150,12 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
         }
     }
   };
+
+  }
+
+ 
+  console.log($scope.data);
+
+  
 
 });

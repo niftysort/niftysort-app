@@ -3,10 +3,11 @@
 <div class="container">
 
   <form ng-submit="getCategory()" class="form-inline ">
-    <div class="form-group">
-      <h4>Enter Category</h4>
-      <input class="form-control" ng-model="searchCategory" type="text" placeholder="category">
-    	<button class="btn btn-success" type='submit'>Find Category</button>
+    <div class="form-group overlayWrapper">
+      <!-- <h4>Enter Category</h4> -->
+      <input class="form-control categoryOverlay1" type="text" placeholder="{{autoComplete}}">
+      <input class="form-control categoryOverlay2" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" type="text" >
+    	<button class="form-control btn btn-success" type='submit'>Find Category</button>
     </div>
   </form>
 

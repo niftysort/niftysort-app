@@ -1,3 +1,32 @@
 body {
 	font-family: sans-serif;
 }
+
+input[type=text] {
+	border: none;
+	background: transparent;
+}
+
+.overlayWrapper {
+	position: relative;
+	// border: 2px solid black;
+}
+
+.overlayWrapper button {
+	display: none !important;
+}
+
+.categoryOverlay1 {
+	color: blue;
+	z-index: 1;
+	position: absolute;
+	top:0;
+	left: 0;
+}
+
+.categoryOverlay2 {
+	z-index: 2;
+	position: absolute;
+	top:0;
+	left: 0;
+}

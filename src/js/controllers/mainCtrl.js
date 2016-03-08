@@ -4,10 +4,10 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
   categoryService.retrieveAllCategories()
   .then(function(resp) {
-    var categoryNames = resp.data.map(function(val) {
+    $scope.categoryNames = resp.data.map(function(val) {
       return val.name;
     })
-    console.log('Possible categories: ', categoryNames);
+    console.log('Possible categories: ', $scope.categoryNames);
   }, function(err) {
   	console.log(err);
   })
@@ -34,6 +34,20 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   		console.log('err ',err);
   	})
   }
+
+  $scope.autoFill= function(categoryInput) {
+
+    if (categoryInput) {
+      var filteredCategories = $scope.categoryNames.filter(function(val) {
+        return val.slice(0, categoryInput.length) === categoryInput;
+      });
+      
+      $scope.autoComplete = filteredCategories.sort()[0];
+    } else {
+      $scope.autoComplete = '';
+    }
+  }
+
 
   function sortByRatingAndPrice(data) {
     var numResults = 10;

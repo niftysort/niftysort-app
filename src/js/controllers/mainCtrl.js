@@ -88,7 +88,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   $scope.options = {
     chart: {
         type: 'scatterChart',
-        width: '100%',
+        height: '100%',
         color: d3.scale.category10().range(),
         scatter: {
             onlyCircles: false
@@ -102,10 +102,10 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
               // console.log(test22);
             }
         },
-        showDistX: false,
-        showDistY: false,
-        showXAxis: false,
-        showYAxis: false,
+        showDistX: true,
+        showDistY: true,
+        showXAxis: true,
+        showYAxis: true,
         padData: true,
         padDataOuter: 0,
         showLegend: false,
@@ -138,7 +138,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
             enabled: true,
             scaleExtent: [1, 10],
             useFixedDomain: false,
-            useNiceScale: true,
+            useNiceScale: false,
             horizontalOff: false,
             verticalOff: false,
             unzoomEventType: 'dblclick.zoom'

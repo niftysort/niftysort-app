@@ -1,5 +1,9 @@
 
 app.controller('mainCtrl', function(categoryService, graphService, $scope){
+
+
+
+
   console.log('main controller loaded!');
 
   categoryService.retrieveAllCategories()
@@ -13,12 +17,20 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   })
 
   $scope.getCategory = function() {
+    console.log(this);
     categoryService.retrieveCategory($scope.searchCategory)
     .then(function(resp) {
       $scope.category = {
         id: resp.data._id,
         name: resp.data.name
       }
+      // angular.element(document).find('#attributes-query')
+      // angular.element( document.querySelector( '#attributes-query' ) )[0].focus();
+
+      setTimeout(function(){
+        document.getElementById("attributes-query").focus();
+      }, 1);
+
     }, function(err) {
     	$scope.category = null;
     	console.log(err);
@@ -94,7 +106,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
             name: 'Female',
             // color: 'rgba(223, 83, 83, .5)',
             // data: [{name:'penis',x: 3, y:0.8, marker: { radius: 20, fillColor: 'rgba(3, 83, 83, .5)'}}, {name:'tanzy',x: 6, y:3, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}]
-            
+
             }]
     });
 
@@ -117,6 +129,10 @@ console.log(chart.series[0].data);
   }
 
   $scope.autoFill= function(categoryInput) {
+
+    // if(!$scope.searchCategory){
+    //   $scope.autoComplete = 'Start by typing the product caterory here!';
+    // }
 
     // on right arrow key up
     if (event.keyCode === 39) {
@@ -169,10 +185,10 @@ console.log(chart.series[0].data);
     $scope.data = [topPoints];
     console.log($scope.data[0].values);
     chart.series[0].setData($scope.data[0].values);
-  
+
   }
 
 
-  
+
 
 });

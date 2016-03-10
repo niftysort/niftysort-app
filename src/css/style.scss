@@ -12,6 +12,10 @@
   box-shadow: 5px 5px 5px #999999;
 }
 
+.hidden{
+  display: none;
+}
+
 path, rect {
   transition: all 0.5s;
 }
@@ -61,16 +65,16 @@ path:hover {
 
 //MAKE PLACEHOLDER TEXT ON MAIN INPUT WHITE
 ::-webkit-input-placeholder{
-  color:gray !important;
+  color: rgba(255, 255, 255, 0.49) !important;
 }
 ::-moz-placeholder{
-  color:gray !important;
+  color: rgba(255, 255, 255, 0.49) !important;
 }
 :-ms-input-placeholder{
-  color:gray !important;
+  color: rgba(255, 255, 255, 0.49) !important;
 }
 :-o-input-placeholder{
-  color:gray !important;
+  color: rgba(255, 255, 255, 0.49) !important;
 }
 
 
@@ -131,21 +135,43 @@ img#white-logo{
   margin-top:70px;
   height:107px;
   width:100%;
+  position: relative;
 }
 
 input.query-input{
   background-color:black;
 }
 
-textarea#user-query{
+.user-query{
   height:100px;
   width:100%;
-  font-size:36px;
+  font-size:34px;
   border:0px;
   background-color:transparent;
   font-family:'Open Sans', sans-serif;
   color:white;
   outline:none;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  overflow: hidden;
+  resize: none;
+}
+
+.user-query-auto{
+  height:100px;
+  width:100%;
+  font-size:34px;
+  border:0px;
+  background-color:transparent;
+  font-family:'Open Sans', sans-serif;
+  color:white;
+  outline:none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  resize: none;
 }
 
 div#test1{

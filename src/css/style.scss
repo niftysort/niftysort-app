@@ -2,6 +2,20 @@
 // 	font-family: sans-serif;
 // }
 //
+
+.hello {
+  fill: blue;
+  stroke: blue;
+}
+
+.hola {
+  border: 2px solid blue;
+}
+
+button:focus {
+  outline: none;
+}
+
 #buffer-extension-hover-button {
   display: none;
 }
@@ -17,7 +31,7 @@
 }
 
 path, rect {
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 
 input[type=text] {

@@ -80,13 +80,43 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                 states: {
                     hover: {
                         marker: {
-                            enabled: false
+                            enabled: true
                         }
                     }
                 },
                 tooltip: {
                     headerFormat: '',
                     pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.rating}'
+                },
+                point: {
+                  events: {
+                    click: function() {
+                      // console.log(this);
+                      // console.log(document.getElementsByTagName("path"));
+                      var paths = document.getElementsByTagName("path");
+
+                      for (var i = 0; i < paths.length; i++) {
+                        paths[i].classList.remove('hello');
+                        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+                      }
+
+                      this.select();
+
+                      for (var i = 0; i < paths.length; i++) {
+                          console.log(paths[i]);
+
+                        if (document.getElementsByTagName("path")[i].getAttribute('fill') === "#FFFFFF") {
+                          document.getElementsByTagName("path")[i].classList.add('hello');
+                          document.getElementsByTagName("path")[i].setAttribute('stroke-width', '40');
+                        }
+                      }
+
+                      // chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
+                    },
+                    select: function() {
+                      console.log(event);
+                    }
+                  }
                 }
             }
         },
@@ -97,6 +127,30 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
             
             }]
     });
+
+
+
+ $scope.renderTest = function() {
+  var asinNum = event.target.dataset['asin'];
+  var pointMod = $scope.data[0].values.filter(function(val) {
+    return asinNum == val.asin;
+  })
+  console.log(pointMod);
+  var pointColor = pointMod[0].marker.fillColor;
+
+  var paths = document.getElementsByTagName("path");
+  for (var i = 0; i < paths.length; i++) {
+                        paths[i].classList.remove('hello');
+                        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+                      }
+  for (var i = 0; i < paths.length; i++) {
+    if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
+      document.getElementsByTagName("path")[i].classList.add('hello');
+      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '40');
+    }
+  }
+}
+  
 
 $scope.changeData = function() {
   console.log('test');
@@ -156,12 +210,15 @@ console.log(chart.series[0].data);
     topPoints.key = data.key;
     var size = topPoints.values.length;
     var color = 0;
+    var asin = 10;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
       console.log(val.rating);
       val.marker = {};
       val.marker.radius = val.rating * 3;
       val.marker.fillColor = `rgb(${color},255,${color})`;
+      val.asin = asin;
+      asin += 10;
       color += 20;
       // console.log(val);
     })
@@ -173,6 +230,5 @@ console.log(chart.series[0].data);
   }
 
 
-  
 
 });

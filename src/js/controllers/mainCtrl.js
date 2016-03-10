@@ -86,7 +86,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                 },
                 tooltip: {
                     headerFormat: '',
-                    pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.y}'
+                    pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.rating}'
                 }
             }
         },
@@ -155,11 +155,14 @@ console.log(chart.series[0].data);
     topPoints.values = data.values.slice(0, numResults);
     topPoints.key = data.key;
     var size = topPoints.values.length;
+    var color = 0;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
       console.log(val.rating);
       val.marker = {};
-      val.marker.radius = val.rating;
+      val.marker.radius = val.rating * 3;
+      val.marker.fillColor = `rgb(${color},255,${color})`;
+      color += 20;
       // console.log(val);
     })
     $scope.data = [];

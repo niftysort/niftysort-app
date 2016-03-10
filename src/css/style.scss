@@ -6,6 +6,16 @@
   display: none;
 }
 
+#container {
+  border: 1px solid gainsboro;
+  margin-top: 60px;
+  box-shadow: 5px 5px 5px #999999;
+}
+
+path, rect {
+  transition: all 0.5s;
+}
+
 input[type=text] {
 	border: none;
 	background: transparent;
@@ -13,7 +23,6 @@ input[type=text] {
 
 .overlayWrapper {
 	position: relative;
-	// border: 2px solid black;
 }
 
 .overlayWrapper button {

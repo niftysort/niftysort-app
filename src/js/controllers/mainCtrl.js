@@ -98,6 +98,18 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                         console.log(pointMod);
                         var pointColor = pointMod[0].marker.fillColor;
 
+                        var buttons = document.getElementsByClassName('asinButton');
+
+                        for (var i = 0; i < buttons.length; i++) {
+                          buttons[i].classList.remove('hola');
+                        }
+
+                        for (var i = 0; i < buttons.length; i++) {
+                          if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
+                            document.getElementsByClassName('asinButton')[i].classList.add('hola');
+                          }
+                        }
+
                         var paths = document.getElementsByTagName("path");
                         for (var i = 0; i < paths.length; i++) {
                                               paths[i].classList.remove('hello');
@@ -106,7 +118,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                         for (var i = 0; i < paths.length; i++) {
                           if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
                             document.getElementsByTagName("path")[i].classList.add('hello');
-                            document.getElementsByTagName("path")[i].setAttribute('stroke-width', '15');
+                            document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
                           }
                         }
 
@@ -135,17 +147,31 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     return asinNum == val.asin;
   })
   console.log(pointMod);
+
   var pointColor = pointMod[0].marker.fillColor;
 
   var paths = document.getElementsByTagName("path");
+
+  var buttons = document.getElementsByClassName('asinButton');
+
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('hola');
+  }
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
+      document.getElementsByClassName('asinButton')[i].classList.add('hola');
+    }
+  }
+
   for (var i = 0; i < paths.length; i++) {
-                        paths[i].classList.remove('hello');
-                        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
-                      }
+    paths[i].classList.remove('hello');
+    document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+  }
   for (var i = 0; i < paths.length; i++) {
     if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
       document.getElementsByTagName("path")[i].classList.add('hello');
-      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '15');
+      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
     }
   }
 }

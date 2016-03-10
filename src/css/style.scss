@@ -4,8 +4,16 @@
 //
 
 .hello {
-  fill: rgb(0,255,0);
-  stroke: rgb(0,255,0);
+  fill: blue;
+  stroke: blue;
+}
+
+.hola {
+  border: 2px solid blue;
+}
+
+button:focus {
+  outline: none;
 }
 
 #buffer-extension-hover-button {
@@ -19,7 +27,7 @@
 }
 
 path, rect {
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 
 input[type=text] {

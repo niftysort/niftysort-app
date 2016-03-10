@@ -27,162 +27,133 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
 
 //This is not a highcharts object. It just looks a little like one!
 
-    var chart = new Highcharts.Chart({
-        chart: {
-            renderTo: 'container',
-            type: 'scatter',
-            zoomType: 'xy'
-        },
-        title: {
-            text: null
-        },
-        subtitle: {
-            text: null
-        },
-        xAxis: {
-          visible: false,
-            title: {
-                enabled: true,
-                text: 'Height (cm)'
-            },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
-        },
-        yAxis: {
-            visible: false,
-            title: {
-                text: 'Weight (kg)'
-            }
-        },
-        legend: {
-          enabled: false,
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: false,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: true
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '',
-                    pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.rating}'
-                },
-                point: {
-                  events: {
-                    click: function() {
-                        var asinNum = this.asin;
-                        var pointMod = $scope.data[0].values.filter(function(val) {
-                          return asinNum == val.asin;
-                        })
-                        console.log(pointMod);
-                        var pointColor = pointMod[0].marker.fillColor;
+var chart = new Highcharts.Chart({
+  chart: {
+    renderTo: 'container',
+    type: 'scatter',
+    zoomType: 'xy'
+  },
+  title: {
+    text: null
+  },
+  subtitle: {
+    text: null
+  },
+  xAxis: {
+    visible: false,
+    title: {
+      enabled: true,
+      text: 'Height (cm)'
+    },
+    startOnTick: true,
+    endOnTick: true,
+    showLastLabel: true
+  },
+  yAxis: {
+    visible: false,
+    title: {
+      text: 'Weight (kg)'
+    }
+  },
+  legend: {
+    enabled: false,
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'top',
+    x: 100,
+    y: 70,
+    floating: true,
+    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+    borderWidth: 1
+  },
+  plotOptions: {
+    scatter: {
+      marker: {
+        radius: 5,
+        states: {
+          hover: {
+            enabled: false,
+            lineColor: 'rgb(100,100,100)'
+          }
+        }
+      },
+      states: {
+        hover: {
+          marker: {
+            enabled: true
+          }
+        }
+      },
+      tooltip: {
+        headerFormat: '',
+        pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.rating}'
+      },
+      point: {
+        events: {
+          click: function() {
+            var asinNum = this.asin;
+            toggleSelected(asinNum);
+          },
+        }
+      }
+    }
+  },
+  series: [{}]
+});
 
-                        var buttons = document.getElementsByClassName('asinButton');
+  $scope.renderTest = function() {
+    var asinNum = event.target.dataset['asin'];
+    toggleSelected(asinNum);
+  }
 
-                        for (var i = 0; i < buttons.length; i++) {
-                          buttons[i].classList.remove('hola');
-                        }
-
-                        for (var i = 0; i < buttons.length; i++) {
-                          if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
-                            document.getElementsByClassName('asinButton')[i].classList.add('hola');
-                          }
-                        }
-
-                        var paths = document.getElementsByTagName("path");
-                        for (var i = 0; i < paths.length; i++) {
-                                              paths[i].classList.remove('hello');
-                                              document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
-                                            }
-                        for (var i = 0; i < paths.length; i++) {
-                          if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
-                            document.getElementsByTagName("path")[i].classList.add('hello');
-                            document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
-                          }
-                        }
-
-                      // chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
-                    },
-                    select: function() {
-                      console.log(event);
-                    }
-                  }
-                }
-            }
-        },
-        series: [{
-            name: 'Female',
-            // color: 'rgba(223, 83, 83, .5)',
-            // data: [{name:'penis',x: 3, y:0.8, marker: { radius: 20, fillColor: 'rgba(3, 83, 83, .5)'}}, {name:'tanzy',x: 6, y:3, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}]
-            
-            }]
+  function toggleSelected(asinNum) {
+    var pointMod = $scope.data[0].values.filter(function(val) {
+      return asinNum == val.asin;
     });
-
-
-
- $scope.renderTest = function() {
-  var asinNum = event.target.dataset['asin'];
-  var pointMod = $scope.data[0].values.filter(function(val) {
-    return asinNum == val.asin;
-  })
-  console.log(pointMod);
-
-  var pointColor = pointMod[0].marker.fillColor;
-
-  var paths = document.getElementsByTagName("path");
-
-  var buttons = document.getElementsByClassName('asinButton');
-
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].classList.remove('hola');
+    var pointColor = pointMod[0].marker.fillColor;
+    toggleButtonHighlight(pointMod);
+    togglePointHighlight(pointColor);
   }
 
-  for (var i = 0; i < buttons.length; i++) {
-    if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
-      document.getElementsByClassName('asinButton')[i].classList.add('hola');
+  function toggleButtonHighlight(pointMod) {
+    var buttons = document.getElementsByClassName('asinButton');
+
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove('hola');
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+      if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
+        document.getElementsByClassName('asinButton')[i].classList.add('hola');
+      }
     }
   }
 
-  for (var i = 0; i < paths.length; i++) {
-    paths[i].classList.remove('hello');
-    document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
-  }
-  for (var i = 0; i < paths.length; i++) {
-    if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
-      document.getElementsByTagName("path")[i].classList.add('hello');
-      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+  function togglePointHighlight(pointColor) {
+    var paths = document.getElementsByTagName("path");
+
+    for (var i = 0; i < paths.length; i++) {
+      paths[i].classList.remove('hello');
+      // document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+    }
+
+    for (var i = 0; i < paths.length; i++) {
+      if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
+        document.getElementsByTagName("path")[i].classList.add('hello');
+        // document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+      }
     }
   }
-}
-  
 
-$scope.changeData = function() {
-  console.log('test');
-  chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
-}
 
-console.log(chart.series[0].data);
+// v------------ Leave for testing purposes (fake data and chart responsive) ----------------v
+
+// $scope.changeData = function() {
+//   console.log('test');
+//   chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
+// }
+
+// ^------------ Leave for testing purposes (fake data and chart responsive) ----------------^
 
 
   $scope.getGraph = function() {
@@ -196,7 +167,6 @@ console.log(chart.series[0].data);
   }
 
   $scope.autoFill= function(categoryInput) {
-
     // on right arrow key up
     if (event.keyCode === 39) {
       this.searchCategory = $scope.autoComplete;
@@ -212,7 +182,6 @@ console.log(chart.series[0].data);
       $scope.autoComplete = '';
     }
   }
-
 
   function sortByRatingAndPrice(data) {
     var numResults = 10;
@@ -236,24 +205,18 @@ console.log(chart.series[0].data);
     var size = topPoints.values.length;
     var color = 0;
     var asin = 10;
+    // var radius = 3;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
-      console.log(val.rating);
       val.marker = {};
+      
       val.marker.radius = val.rating * 3;
       val.marker.fillColor = `rgb(${color},255,${color})`;
       val.asin = asin;
       asin += 10;
-      color += 20;
-      // console.log(val);
+      color += Math.round(200/numResults);
     })
-    $scope.data = [];
     $scope.data = [topPoints];
-    console.log($scope.data[0].values);
     chart.series[0].setData($scope.data[0].values);
-  
   }
-
-
-
 });

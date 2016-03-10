@@ -34,12 +34,13 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
             zoomType: 'xy'
         },
         title: {
-            text: 'Height Versus Weight of 507 Individuals by Gender'
+            text: null
         },
         subtitle: {
-            text: 'Source: Heinz  2003'
+            text: null
         },
         xAxis: {
+          visible: false,
             title: {
                 enabled: true,
                 text: 'Height (cm)'
@@ -49,11 +50,13 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
             showLastLabel: true
         },
         yAxis: {
+            visible: false,
             title: {
                 text: 'Weight (kg)'
             }
         },
         legend: {
+          enabled: false,
             layout: 'vertical',
             align: 'left',
             verticalAlign: 'top',
@@ -83,17 +86,24 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                 },
                 tooltip: {
                     headerFormat: '',
-                    pointFormat: '<b>{series.name}</b><br>{point.x} {point.name} cm, {point.y} kg'
+                    pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.y}'
                 }
             }
         },
         series: [{
             name: 'Female',
-            color: 'rgba(223, 83, 83, .5)',
-            data: [{name:'penis',x: 3, y:0.8, marker: { radius: 20, color: 'black'}}, {name:'tanzy',x: 6, y:3, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}]
+            // color: 'rgba(223, 83, 83, .5)',
+            // data: [{name:'penis',x: 3, y:0.8, marker: { radius: 20, fillColor: 'rgba(3, 83, 83, .5)'}}, {name:'tanzy',x: 6, y:3, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}]
             
             }]
     });
+
+$scope.changeData = function() {
+  console.log('test');
+  chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
+}
+
+console.log(chart.series[0].data);
 
 
   $scope.getGraph = function() {
@@ -147,20 +157,18 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     var size = topPoints.values.length;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
-      val.size = val.rating;
-      val.series = 0;
-      console.log(val);
+      console.log(val.rating);
+      val.marker = {};
+      val.marker.radius = val.rating;
+      // console.log(val);
     })
-    // console.log([topPoints]);
-    console.log(angular.element(document.querySelector('#chart-contain'))[0].innerHTML);
-    angular.element(document.querySelector('#chart-contain'))[0].innerHTML = '<nvd3 options="options" data="data"></nvd3>';
     $scope.data = [];
     $scope.data = [topPoints];
+    console.log($scope.data[0].values);
+    chart.series[0].setData($scope.data[0].values);
   
   }
 
- 
-  console.log($scope.data);
 
   
 

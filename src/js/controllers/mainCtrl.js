@@ -25,8 +25,75 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     })
   }
 
+//This is not a highcharts object. It just looks a little like one!
 
-
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Height Versus Weight of 507 Individuals by Gender'
+        },
+        subtitle: {
+            text: 'Source: Heinz  2003'
+        },
+        xAxis: {
+            title: {
+                enabled: true,
+                text: 'Height (cm)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                text: 'Weight (kg)'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: false,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: '<b>{series.name}</b><br>{point.x} {point.name} cm, {point.y} kg'
+                }
+            }
+        },
+        series: [{
+            name: 'Female',
+            color: 'rgba(223, 83, 83, .5)',
+            data: [{name:'penis',x: 3, y:0.8, marker: { radius: 20, color: 'black'}}, {name:'tanzy',x: 6, y:3, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}]
+            
+            }]
+    });
 
 
   $scope.getGraph = function() {
@@ -82,75 +149,14 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
       val.size = val.rating;
       val.series = 0;
+      console.log(val);
     })
     // console.log([topPoints]);
+    console.log(angular.element(document.querySelector('#chart-contain'))[0].innerHTML);
+    angular.element(document.querySelector('#chart-contain'))[0].innerHTML = '<nvd3 options="options" data="data"></nvd3>';
+    $scope.data = [];
     $scope.data = [topPoints];
-  //   $scope.data = [{
-  //   key: 'Group 1',
-  //   values: [{x: 3, y: 3, size: 2, shape: 'circle'}, {x: 2, y: 1, size: 5, shape: 'circle'},  {x: 1.5, y: 0.5, size: 3, shape: 'circle'}]
-  // }];
-
-    $scope.options = {
-    chart: {
-        type: 'scatterChart',
-        height: '100%',
-        color: d3.scale.category10().range(),
-        scatter: {
-            onlyCircles: false
-        },
-        dispatch: {
-            renderEnd: function(e){
-              // var renderedChart = angular.element(document.querySelector('.nvd3-svg'))[0];
-              var renderedWidth = angular.element(document.querySelector('.nvd3-svg'))[0].clientWidth;
-              // angular.element(document.querySelector('.nvd3-svg'))[0].css('height', renderedWidth);
-              angular.element(document.querySelector('.nvd3-svg'))[0].style.height = renderedWidth;
-              // console.log(test22);
-            }
-        },
-        showDistX: false,
-        showDistY: false,
-        showXAxis: true,
-        showYAxis: true,
-        padData: true,
-        padDataOuter: 0,
-        showLegend: false,
-        useInteractiveGuideline: true,
-        // forceY: [0],
-
-        tooltip: {
-          contentGenerator: function(key, x, y, e) {
-            console.log(key);
-            return '<h3>Rating: ' + key.point.rating.toFixed(2) + '</h3><h4>Price: $' + key.point.xR + '</xR>'
-          }
-        },
-
-        duration: 350,
-        xAxis: {
-            axisLabel: '',
-            tickFormat: function(d){
-              return '';
-            }
-        },
-        yAxis: {
-            axisLabel: '',
-            tickFormat: function(d){
-              return '';
-            },
-            axisLabelDistance: -5
-        },
-        zoom: {
-            //NOTE: All attributes below are optional
-            enabled: true,
-            scaleExtent: [1, 10],
-            useFixedDomain: false,
-            useNiceScale: false,
-            horizontalOff: false,
-            verticalOff: false,
-            unzoomEventType: 'dblclick.zoom'
-        }
-    }
-  };
-
+  
   }
 
  

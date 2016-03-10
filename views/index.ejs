@@ -3,18 +3,18 @@
   <head>
     <title>NiftySort</title>
     <link rel='stylesheet' href='https://bootswatch.com/lumen/bootstrap.min.css'/> <!-- eventually bower -->
-    <link rel='stylesheet' href='/bower_components/nvd3/build/nv.d3.min.css'/>
     <link rel='stylesheet' href='/css/style.css'/>
+ 
+    <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/bower_components/d3/d3.min.js"></script>
-    <script src="/nvd3/nv.d3.js"></script>
-    <script src="/bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
-    <script src="/js/bundle.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
   </head>
   <body ng-app="myApp">
 
     <ui-view></ui-view>
 
+    <script src="/js/bundle.js"></script>
   </body>
 </html>

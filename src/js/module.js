@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('myApp', ['nvd3', 'ui.router']);
+var app = angular.module('myApp', ['ui.router','highcharts-ng']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

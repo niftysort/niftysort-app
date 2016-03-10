@@ -91,25 +91,24 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
                 point: {
                   events: {
                     click: function() {
-                      // console.log(this);
-                      // console.log(document.getElementsByTagName("path"));
-                      var paths = document.getElementsByTagName("path");
+                        var asinNum = this.asin;
+                        var pointMod = $scope.data[0].values.filter(function(val) {
+                          return asinNum == val.asin;
+                        })
+                        console.log(pointMod);
+                        var pointColor = pointMod[0].marker.fillColor;
 
-                      for (var i = 0; i < paths.length; i++) {
-                        paths[i].classList.remove('hello');
-                        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
-                      }
-
-                      this.select();
-
-                      for (var i = 0; i < paths.length; i++) {
-                          console.log(paths[i]);
-
-                        if (document.getElementsByTagName("path")[i].getAttribute('fill') === "#FFFFFF") {
-                          document.getElementsByTagName("path")[i].classList.add('hello');
-                          document.getElementsByTagName("path")[i].setAttribute('stroke-width', '40');
+                        var paths = document.getElementsByTagName("path");
+                        for (var i = 0; i < paths.length; i++) {
+                                              paths[i].classList.remove('hello');
+                                              document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
+                                            }
+                        for (var i = 0; i < paths.length; i++) {
+                          if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
+                            document.getElementsByTagName("path")[i].classList.add('hello');
+                            document.getElementsByTagName("path")[i].setAttribute('stroke-width', '15');
+                          }
                         }
-                      }
 
                       // chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
                     },
@@ -146,7 +145,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   for (var i = 0; i < paths.length; i++) {
     if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
       document.getElementsByTagName("path")[i].classList.add('hello');
-      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '40');
+      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '15');
     }
   }
 }

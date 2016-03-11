@@ -42,19 +42,6 @@
               <div id="bottom-left-label"><span id="no-float" class="graph-label-text">EXPENSIVE </span></div>
               <div id="bottom-middle-label"><img class="hidden-xs" src="img/vert-line-arrow.svg" id="horiz-line"></div>
               <div id="bottom-right-label"><span class="graph-label-text">CHEAP! </span></div>
-
-              <button ng-click="changeData()">test</button>
-              <button class="asinButton" data-asin="100" ng-click="renderTest()" >100</button>
-              <button class="asinButton" data-asin="90" ng-click="renderTest()">90</button>
-              <button class="asinButton" data-asin="80" ng-click="renderTest()">80</button>
-              <button class="asinButton" data-asin="70" ng-click="renderTest()">70</button>
-              <button class="asinButton" data-asin="60" ng-click="renderTest()">60</button>
-              <button class="asinButton" data-asin="50" ng-click="renderTest()">50</button>
-              <button class="asinButton" data-asin="40" ng-click="renderTest()">40</button>
-              <button class="asinButton" data-asin="30" ng-click="renderTest()">30</button>
-              <button class="asinButton" data-asin="20" ng-click="renderTest()">20</button>
-              <button class="asinButton" data-asin="10" ng-click="renderTest()">10</button>
-
             </div>
           </div>
         </div>
@@ -93,7 +80,26 @@
       <div class="hidden-xs hidden-sm" id="list-top-spacer-md"></div>
       <div class="hidden-md hidden-lg" id="list-top-spacer-xs"></div>
       <div id="list-container">
-        <div id="top-product" class="product-card">
+        <div class="product-card" ng-repeat="product in products" data-id={{product.id}} ng-click="renderTest(product.id)">
+          <div class="card-thumbnail"><img src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
+          <div class="card-description">
+            <div class="card-title-block">
+              <span class="card-title" ng-if="product.name.length > 60">{{product.name.substring(0,60)}}...</span>
+              <span class="card-title" ng-if="product.name.length <= 60">{{product.name}}</span>
+              <span class="card-sub-title">Price: ${{product.xR}} Rating: {{product.rating.toFixed(2)}}</span>
+              <span class="card-text-description">
+                <ul>
+                  <!-- <li ng-repeat="feature in product.info.features">{{feature}}</li> -->
+                  <li>> {{(product.info.features[0].length > 100) ? product.info.features[0].substring(0,100) : product.info.features[0]}}<span ng-if="product.info.features[0].length > 100">...</span></li>
+                  <li>> {{(product.info.features[2].length > 100) ? product.info.features[2].substring(0,100) : product.info.features[2]}}<span ng-if="product.info.features[2].length > 100">...</span></li>
+                  <li>> {{(product.info.features[3].length > 100) ? product.info.features[3].substring(0,100) : product.info.features[3]}}<span ng-if="product.info.features[3].length > 100">...</span></li>
+                </ul>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div id="top-product" class="product-card">
           <div class="card-thumbnail"><img src="img/prod_placeholder.jpeg" class="product-thumbnail"></div>
           <div class="card-description">
             <div class="card-title-block"><span class="card-title">Sony MDX-3400 Headphones </span><span class="card-sub-title">PRICE: $299.99&nbsp; AVG: 4/5 STARS </span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. </span></div>
@@ -107,7 +113,7 @@
         <div class="product-card"></div>
         <div class="product-card"></div>
         <div class="product-card"></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

@@ -17,7 +17,6 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
   })
 
   $scope.getCategory = function() {
-    console.log(this);
     categoryService.retrieveCategory($scope.searchCategory)
     .then(function(resp) {
       $scope.category = {
@@ -103,8 +102,9 @@ var chart = new Highcharts.Chart({
       point: {
         events: {
           click: function() {
-            var asinNum = this.asin;
-            toggleSelected(asinNum);
+            console.log(this)
+            var id = this.id;
+            toggleSelected(id);
           },
         }
       }
@@ -113,14 +113,13 @@ var chart = new Highcharts.Chart({
   series: [{}]
 });
 
-  $scope.renderTest = function() {
-    var asinNum = event.target.dataset['asin'];
-    toggleSelected(asinNum);
+  $scope.renderTest = function(id) {
+    toggleSelected(id);
   }
 
-  function toggleSelected(asinNum) {
+  function toggleSelected(id) {
     var pointMod = $scope.data[0].values.filter(function(val) {
-      return asinNum == val.asin;
+      return id == val.id;
     });
     var pointColor = pointMod[0].marker.fillColor;
     toggleButtonHighlight(pointMod);
@@ -128,15 +127,15 @@ var chart = new Highcharts.Chart({
   }
 
   function toggleButtonHighlight(pointMod) {
-    var buttons = document.getElementsByClassName('asinButton');
+    var products = document.getElementsByClassName('product-card');
 
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].classList.remove('hola');
+    for (var i = 0; i < products.length; i++) {
+      products[i].classList.remove('hola');
     }
 
-    for (var i = 0; i < buttons.length; i++) {
-      if (document.getElementsByClassName('asinButton')[i].dataset.asin == pointMod[0].asin) {
-        document.getElementsByClassName('asinButton')[i].classList.add('hola');
+    for (var i = 0; i < products.length; i++) {
+      if (document.getElementsByClassName('product-card')[i].dataset.id == pointMod[0].id) {
+        document.getElementsByClassName('product-card')[i].classList.add('hola');
       }
     }
   }
@@ -217,7 +216,6 @@ var chart = new Highcharts.Chart({
     topPoints.key = data.key;
     var size = topPoints.values.length;
     var color = 0;
-    var asin = 10;
     // var radius = 3;
     topPoints.values.forEach(function(val) {
       val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
@@ -225,11 +223,18 @@ var chart = new Highcharts.Chart({
 
       val.marker.radius = val.rating * 3;
       val.marker.fillColor = `rgb(${color},255,${color})`;
-      val.asin = asin;
-      asin += 10;
       color += Math.round(200/numResults);
     })
     $scope.data = [topPoints];
+    // console.log($scope.data);
     chart.series[0].setData($scope.data[0].values);
+
+
+
+    $scope.products = $scope.data[0].values;
+    console.log($scope.products);
+
+
+
   }
 });

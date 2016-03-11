@@ -9,7 +9,7 @@
 }
 
 .hola {
-  border: 2px solid blue;
+  border: 2px solid blue !important;
 }
 
 button:focus {
@@ -417,7 +417,7 @@ span.card-title{
 }
 
 .card-sub-title{
-  font-size:9px;
+  font-size:14px;
   color:grey;
   display:block;
   margin-top:-1px;
@@ -429,6 +429,15 @@ span.card-text-description{
   font-size:11px;
   color:rgb(109,109,109);
   padding-right:15px;
+}
+
+span.card-text-description > ul{
+  padding-left: 10px;
+}
+
+span.card-text-description > ul > li{
+  list-style-type: none;
+  margin-bottom: 2px;
 }
 
 div#sticky-test{

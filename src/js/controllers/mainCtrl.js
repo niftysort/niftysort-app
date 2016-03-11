@@ -166,19 +166,7 @@ var chart = new Highcharts.Chart({
 
 // ^------------ Leave for testing purposes (fake data and chart responsive) ----------------^
 
-  $scope.slider = {
-  min: 0,
-  max: 450,
-  options: {
-    floor: 0,
-    ceil: 450,
-    minRange: 50,
-    noSwitching: true,
-    onEnd: function() {
-      console.log('ya');
-    }
-  }
-};
+
 
   $scope.getGraph = function() {
   	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
@@ -208,13 +196,15 @@ var chart = new Highcharts.Chart({
     }
   }
 
-  function sortByRatingAndPrice(data) {
+  function sortByRatingAndPrice(data, minPrice, maxPrice) {
     var numResults = 10;
     var slider = 5;
+    console.log(maxPrice, minPrice);
 
     var maxX = data.values.reduce(function(prev, curr) {
       return (prev.xR > curr.xR) ? prev : curr;
     });
+    console.log(maxX);
 
     var maxY = data.values.reduce(function(prev, curr) {
       return (prev.y > curr.y) ? prev : curr;
@@ -223,6 +213,21 @@ var chart = new Highcharts.Chart({
     data.values.sort(function(a,b) {
       return ( b.y/maxY.y*slider + (1-(b.xR/maxX.xR))*(10-slider) ) - ( a.y/maxY.y*slider + (1-(a.xR/maxX.xR))*(10-slider) )
     });
+
+    $scope.slider = {
+      min: minPrice || 0,
+      max: Math.ceil(maxX.xR),
+      options: {
+        floor: 0,
+        ceil: Math.ceil(maxX.xR),
+        minRange: Math.round(maxX.xR/10),
+        noSwitching: true,
+        onEnd: function() {
+          console.log('ya');
+          sortByRatingAndPrice(data, $scope.slider.min, $scope.slider.max);
+        }
+      }
+    };
 
     var topPoints = {};
     topPoints.values = data.values.slice(0, numResults);

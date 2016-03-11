@@ -171,7 +171,7 @@ var chart = new Highcharts.Chart({
   $scope.getGraph = function() {
   	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
   	.then(function(resp) {
-      sortByRatingAndPrice(resp.data);
+      sortByRatingAndPrice(resp.data.values);
   	}, function(err) {
   		$scope.data = [];
   		console.log('err ',err);
@@ -196,27 +196,33 @@ var chart = new Highcharts.Chart({
     }
   }
 
-  function sortByRatingAndPrice(data, minPrice, maxPrice) {
+  function sortByRatingAndPrice(products, minPrice, maxPrice) {
     var numResults = 10;
-    var slider = 5;
-    console.log(maxPrice, minPrice);
+    
 
-    var maxX = data.values.reduce(function(prev, curr) {
+    var permittedProducts = removeZeroValueProducts(products);
+
+    console.log(permittedProducts);
+
+    var limitedRangeProducts = getProductsInRange(permittedProducts, $scope.slider.min, $scope.slider.max)
+
+    console.log(limitedRangeProducts);
+
+    var maxX = permittedProducts.reduce(function(prev, curr) {
       return (prev.xR > curr.xR) ? prev : curr;
     });
-    console.log(maxX);
 
-    var maxY = data.values.reduce(function(prev, curr) {
+    var maxY = permittedProducts.reduce(function(prev, curr) {
       return (prev.y > curr.y) ? prev : curr;
     });
 
-    data.values.sort(function(a,b) {
-      return ( b.y/maxY.y*slider + (1-(b.xR/maxX.xR))*(10-slider) ) - ( a.y/maxY.y*slider + (1-(a.xR/maxX.xR))*(10-slider) )
+    permittedProducts.sort(function(a,b) {
+      return ( b.y/maxY.y*5 + (1-(b.xR/maxX.xR))*(5) ) - ( a.y/maxY.y*5 + (1-(a.xR/maxX.xR))*(5) )
     });
 
     $scope.slider = {
       min: minPrice || 0,
-      max: Math.ceil(maxX.xR),
+      max: maxPrice || Math.ceil(maxX.xR),
       options: {
         floor: 0,
         ceil: Math.ceil(maxX.xR),
@@ -224,19 +230,19 @@ var chart = new Highcharts.Chart({
         noSwitching: true,
         onEnd: function() {
           console.log('ya');
-          sortByRatingAndPrice(data, $scope.slider.min, $scope.slider.max);
+          sortByRatingAndPrice(permittedProducts, $scope.slider.min, $scope.slider.max);
         }
       }
     };
 
     var topPoints = {};
-    topPoints.values = data.values.slice(0, numResults);
-    topPoints.key = data.key;
+    topPoints.values = permittedProducts.slice(0, numResults);
+    topPoints.key = products.key;
     var size = topPoints.values.length;
     var color = 0;
     // var radius = 3;
     topPoints.values.forEach(function(val) {
-      val.rating = val.y/maxY.y*slider + (1-(val.xR/maxX.xR))*(10-slider);
+      val.rating = val.y/maxY.y*5 + (1-(val.xR/maxX.xR))*5;
       val.marker = {};
 
       val.marker.radius = val.rating * 3;
@@ -248,11 +254,20 @@ var chart = new Highcharts.Chart({
     chart.series[0].setData($scope.data[0].values);
 
 
-
     $scope.products = $scope.data[0].values;
-    console.log($scope.products);
-
-
 
   }
+
+  function removeZeroValueProducts(products) {
+    return products.filter(function(val) {
+      return val.xR;
+    });
+  }
+
+  function getProductsInRange(products, minPrice, maxPrice) {
+    return products.filter(function(val) {
+      return val.xR >= minPrice && val.xR <= maxPrice;
+    });
+  }
+
 });

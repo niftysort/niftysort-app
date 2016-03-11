@@ -166,9 +166,22 @@ var chart = new Highcharts.Chart({
 
 // ^------------ Leave for testing purposes (fake data and chart responsive) ----------------^
 
+  $scope.slider = {
+  min: 0,
+  max: 450,
+  options: {
+    floor: 0,
+    ceil: 450,
+    minRange: 50,
+    noSwitching: true,
+    onEnd: function() {
+      console.log('ya');
+    }
+  }
+};
 
   $scope.getGraph = function() {
-  	graphService.retrieveGraph($scope.category.id, $scope.attribute)
+  	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
   	.then(function(resp) {
       sortByRatingAndPrice(resp.data);
   	}, function(err) {

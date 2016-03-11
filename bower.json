@@ -23,6 +23,7 @@
     "angular": "~1.5.0",
     "bootstrap": "~3.3.6",
     "angular-ui-router": "~0.2.18",
-    "highcharts-ng": "~0.0.11"
+    "highcharts-ng": "~0.0.11",
+    "angularjs-slider": "~2.10.2"
   }
 }

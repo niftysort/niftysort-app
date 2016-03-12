@@ -1,5 +1,5 @@
 
-app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
+app.controller('mainCtrl', function(categoryService, graphService, productService, $scope, $anchorScroll, $location){
   console.log('main controller loaded!');
 
   // ASSIGN SLIDER OPTIONS
@@ -115,6 +115,7 @@ var chart = new Highcharts.Chart({
           click: function() {
             var id = this.id;
             toggleSelected(id);
+            goToProduct(id);
           },
         }
       }
@@ -137,6 +138,13 @@ var chart = new Highcharts.Chart({
     var pointColor = pointMod[0].marker.fillColor;
     toggleButtonHighlight(pointMod);
     togglePointHighlight(pointColor);
+  }
+
+  function goToProduct(id) {
+    console.log('scroll');
+    var newHash = id;
+      $location.hash(id);
+      $anchorScroll();
   }
 
   //remove class hola from all product cards and add only to correct card
@@ -268,3 +276,7 @@ var chart = new Highcharts.Chart({
   }
 
 });
+
+app.run(function($anchorScroll) {
+  $anchorScroll.yOffset = 320;   // always scroll by 50 extra pixels
+})

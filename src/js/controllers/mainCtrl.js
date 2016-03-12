@@ -108,7 +108,12 @@ var chart = new Highcharts.Chart({
       },
       tooltip: {
         headerFormat: '',
-        pointFormat: '<b>{point.name}</b><br>${point.xR} , Rating: {point.rating}'
+        pointFormatter: function() {
+          var name = (this.name.length > 40) ? this.name.substring(0,40).trim() +'...' : name;
+          var price = this.xR.toFixed(2)
+          var rating = this.rating.toFixed(2);
+          return `<h1><b>${name}</b></h1><br>Price: $${price} - Rating: <strong>${rating}</strong>`
+        }
       },
       point: {
         events: {

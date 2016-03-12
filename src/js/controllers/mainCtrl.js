@@ -2,6 +2,7 @@
 app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
   console.log('main controller loaded!');
 
+  // ASSIGN SLIDER OPTIONS
   $scope.slider = {
     min: 0,
     max: 100,
@@ -11,11 +12,13 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
       minRange: 10,
       noSwitching: true,
       onEnd: function() {
-        getRangeTopProducts($scope.products, $scope.slider.min, $scope.slider.max);
+        getRangeTopProducts($scope.slider.min, $scope.slider.max);
       }
     }
   };
 
+
+  //GET ALL CATEGORIES FROM BACKEND ON PAGE LOAD
   categoryService.retrieveAllCategories()
   .then(function(resp) {
     $scope.categoryNames = resp.data.map(function(val) {
@@ -26,6 +29,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   	console.log(err);
   })
 
+  //GET SPECIFIC CATEGORY FROM INPUT
   $scope.getCategory = function() {
     categoryService.retrieveCategory($scope.searchCategory)
     .then(function(resp) {
@@ -44,8 +48,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     })
   };
 
-//This is not a highcharts object. It just looks a little like one!
-
+//PASS OPTIONS TO HIGHCHARTS
 var chart = new Highcharts.Chart({
   chart: {
     renderTo: 'container',
@@ -120,10 +123,13 @@ var chart = new Highcharts.Chart({
   series: [{}]
 });
 
+
+  //MARKER AND CARD CLICK HANDLER
   $scope.renderTest = function(id) {
     toggleSelected(id);
   }
 
+  //FIND MARKER ONCE CLICKED, HIGHLIGHT BOTH CARD AND MARKER
   function toggleSelected(id) {
     var pointMod = $scope.topProducts.filter(function(val) {
       return id == val.id;
@@ -133,6 +139,7 @@ var chart = new Highcharts.Chart({
     togglePointHighlight(pointColor);
   }
 
+  //remove class hola from all product cards and add only to correct card
   function toggleButtonHighlight(pointMod) {
     var products = document.getElementsByClassName('product-card');
 
@@ -147,6 +154,7 @@ var chart = new Highcharts.Chart({
     }
   }
 
+  //remove hola from all markers that aren't selected then add to correct one
   function togglePointHighlight(pointColor) {
     var paths = document.getElementsByTagName("path");
 
@@ -163,7 +171,7 @@ var chart = new Highcharts.Chart({
     }
   }
 
-
+  //get products of category from backend and send to cache
   $scope.getGraph = function() {
   	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
   	.then(function(resp) {
@@ -173,6 +181,8 @@ var chart = new Highcharts.Chart({
   		console.log('err ',err);
   	})
   }
+
+
 
   $scope.autoFill= function(categoryInput) {
 
@@ -193,6 +203,7 @@ var chart = new Highcharts.Chart({
   }
 
 
+  //only invoked upon attribute query, output is scope.products and scope.topProducts
   function cacheCategoryData(category) {
     $scope.products = category.values;
     var products = category.values;
@@ -213,7 +224,10 @@ var chart = new Highcharts.Chart({
     initializeSlider(minX, maxX);
   }
 
-  function getRangeTopProducts(products, minPrice, maxPrice) {
+
+  //ON SLIDER CHANGE TAKE IN SLIDER MIN MAX AND RE-CALC RANGE
+  function getRangeTopProducts(minPrice, maxPrice) {
+    var products = $scope.products;
     $scope.topProducts = [];
     chart.series[0].setData([{}]);
     console.log(minPrice, maxPrice);
@@ -241,10 +255,11 @@ var chart = new Highcharts.Chart({
 
   function removeZeroValueProducts(products) {
     return products.filter(function(val) {
-      return val.xR;
+      return (val.xR && val.y);
     });
   }
 
+  //get maximum price of products
   function getMaxX(products) {
     return products.reduce(function(prev, curr) {
       return (prev.xR >= curr.xR) ? prev : curr;
@@ -269,10 +284,12 @@ var chart = new Highcharts.Chart({
     });
   }
 
+  //MAX OF 10 PRODUCTS
   function getTopResults(sortedProducts, numResults) {
     // return sortedProducts.slice(0, 10);
     return sortedProducts;
   }
+
 
   function assignPointProperties(topProducts, maxX, maxY, numResults) {
     var color = 0;
@@ -289,7 +306,8 @@ var chart = new Highcharts.Chart({
   }
 
   function renderGraph(products) {
-    chart.series[0].setData(products);
+    chart.series[0].setData(products, false);
+    chart.redraw();
   }
 
   function getProductsInRange(permitProducts, minPrice, maxPrice) {

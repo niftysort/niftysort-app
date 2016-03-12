@@ -209,9 +209,9 @@ var chart = new Highcharts.Chart({
     var products = category.values;
 
     var permittedProducts = productService.removeZeroValueProducts(products);
-    var maxX = getMaxX(permittedProducts);
-    var minX = getMinX(permittedProducts);
-    var maxY = getMaxY(permittedProducts);
+    var maxX = productService.getMaxX(permittedProducts);
+    var minX = productService.getMinX(permittedProducts);
+    var maxY = productService.getMaxY(permittedProducts);
     var sortedProductsByRating = sortCachedData(permittedProducts, maxX, maxY);
 
     // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
@@ -233,8 +233,8 @@ var chart = new Highcharts.Chart({
     console.log(minPrice, maxPrice);
     var permittedProducts = productService.removeZeroValueProducts(products);
     var rangedProducts = getProductsInRange(permittedProducts, minPrice, maxPrice);
-    var maxX = getMaxX(permittedProducts);
-    var maxY = getMaxY(permittedProducts);
+    var maxX = productService.getMaxX(permittedProducts);
+    var maxY = productService.getMaxY(permittedProducts);
     var sortedProductsByRating = sortCachedData(rangedProducts, maxX, maxY);
     // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
     var desiredNumResults = permittedProducts.length;
@@ -251,25 +251,6 @@ var chart = new Highcharts.Chart({
     $scope.slider.max = maxX.xR;
     $scope.slider.options.floor = minX.xR;
     $scope.slider.options.ceil = maxX.xR;
-  }
-
-  //get maximum price of products
-  function getMaxX(products) {
-    return products.reduce(function(prev, curr) {
-      return (prev.xR >= curr.xR) ? prev : curr;
-    });
-  }
-
-  function getMinX(products) {
-    return products.reduce(function(prev, curr) {
-      return (prev.xR <= curr.xR) ? prev : curr;
-    });
-  }
-
-  function getMaxY(products) {
-    return products.reduce(function(prev, curr) {
-      return (prev.y >= curr.y) ? prev : curr;
-    });
   }
 
   function sortCachedData(products, maxX, maxY) {

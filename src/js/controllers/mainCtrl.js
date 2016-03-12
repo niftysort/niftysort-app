@@ -1,10 +1,20 @@
 
-app.controller('mainCtrl', function(categoryService, graphService, $scope){
-
-
-
-
+app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
   console.log('main controller loaded!');
+
+  $scope.slider = {
+    min: 0,
+    max: 100,
+    options: {
+      floor: 0,
+      ceil: 100,
+      minRange: 10,
+      noSwitching: true,
+      onEnd: function() {
+        getRangeTopProducts($scope.products, $scope.slider.min, $scope.slider.max);
+      }
+    }
+  };
 
   categoryService.retrieveAllCategories()
   .then(function(resp) {
@@ -22,9 +32,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
       $scope.category = {
         id: resp.data._id,
         name: resp.data.name
-      }
-      // angular.element(document).find('#attributes-query')
-      // angular.element( document.querySelector( '#attributes-query' ) )[0].focus();
+      };
 
       setTimeout(function(){
         document.getElementById("attributes-query").focus();
@@ -34,7 +42,7 @@ app.controller('mainCtrl', function(categoryService, graphService, $scope){
     	$scope.category = null;
     	console.log(err);
     })
-  }
+  };
 
 //This is not a highcharts object. It just looks a little like one!
 
@@ -117,7 +125,7 @@ var chart = new Highcharts.Chart({
   }
 
   function toggleSelected(id) {
-    var pointMod = $scope.products.filter(function(val) {
+    var pointMod = $scope.topProducts.filter(function(val) {
       return id == val.id;
     });
     var pointColor = pointMod[0].marker.fillColor;
@@ -186,23 +194,48 @@ var chart = new Highcharts.Chart({
 
 
   function cacheCategoryData(category) {
-    var desiredNumResults = 10 // TODO: May allow user to chose
+    $scope.products = category.values;
     var products = category.values;
 
     var permittedProducts = removeZeroValueProducts(products);
-    var maxX = getMaxX(products);
-    var maxY = getMaxY(products);
-    var sortedProductsByRating = sortCachedData(products, maxX, maxY);
+    var maxX = getMaxX(permittedProducts);
+    var minX = getMinX(permittedProducts);
+    var maxY = getMaxY(permittedProducts);
+    var sortedProductsByRating = sortCachedData(permittedProducts, maxX, maxY);
+
+    var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    // var desiredNumResults = permittedProducts.length;
     var topProducts = getTopResults(sortedProductsByRating, desiredNumResults);
-    $scope.products = assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
 
-    renderGraph($scope.products);
+    $scope.topProducts = assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
 
-    console.log(permittedProducts, maxX, maxY);
-    console.log(sortedProductsByRating);
-    console.log(topProducts);
-    console.log($scope.products);
+    renderGraph($scope.topProducts);
+    initializeSlider(minX, maxX);
+  }
 
+  function getRangeTopProducts(products, minPrice, maxPrice) {
+    $scope.topProducts = [];
+    chart.series[0].setData([{}]);
+    console.log(minPrice, maxPrice);
+    var permittedProducts = removeZeroValueProducts(products);
+    var rangedProducts = getProductsInRange(permittedProducts, minPrice, maxPrice);
+    var maxX = getMaxX(permittedProducts);
+    var maxY = getMaxY(permittedProducts);
+    var sortedProductsByRating = sortCachedData(rangedProducts, maxX, maxY);
+    var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    // var desiredNumResults = permittedProducts.length;
+
+    var topProducts = getTopResults(sortedProductsByRating, desiredNumResults);
+
+    $scope.topProducts = assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
+    renderGraph($scope.topProducts);
+  }
+
+  function initializeSlider(minX, maxX) {
+    $scope.slider.min = minX.xR;
+    $scope.slider.max = maxX.xR;
+    $scope.slider.options.floor = minX.xR;
+    $scope.slider.options.ceil = maxX.xR;
   }
 
   function removeZeroValueProducts(products) {
@@ -214,6 +247,12 @@ var chart = new Highcharts.Chart({
   function getMaxX(products) {
     return products.reduce(function(prev, curr) {
       return (prev.xR >= curr.xR) ? prev : curr;
+    });
+  }
+
+  function getMinX(products) {
+    return products.reduce(function(prev, curr) {
+      return (prev.xR <= curr.xR) ? prev : curr;
     });
   }
 
@@ -231,6 +270,7 @@ var chart = new Highcharts.Chart({
 
   function getTopResults(sortedProducts, numResults) {
     return sortedProducts.slice(0, numResults);
+    // return sortedProducts;
   }
 
   function assignPointProperties(topProducts, maxX, maxY, numResults) {
@@ -249,78 +289,6 @@ var chart = new Highcharts.Chart({
 
   function renderGraph(products) {
     chart.series[0].setData(products);
-  }
-
-
-  function sortByRatingAndPrice(data, minPrice, maxPrice) {
-
-    console.log(minPrice, maxPrice);
-    
-    var permittedProducts = removeZeroValueProducts(products);
-
-    $scope.slider.min = minPrice || 0;
-    $scope.slider.max = maxPrice || maxXOriginal.xR;
-
-
-    var limitedRangeProducts = getProductsInRange(permittedProducts, $scope.slider.min, $scope.slider.max)
-
-
-
-    // var numResults = (limitedRangeProducts.length > 10) ? 10 : limitedRangeProducts.length;
-    console.log(limitedRangeProducts.length);
-    console.log(numResults);
-
-    // var numResults = limitedRangeProducts.length;
-    var numResults = 10;
-
-
-    var maxX = limitedRangeProducts.reduce(function(prev, curr) {
-      return (prev.xR >= curr.xR) ? prev : curr;
-    });
-
-    console.log(maxX.xR);
-
-    var maxY = limitedRangeProducts.reduce(function(prev, curr) {
-      return (prev.y > curr.y) ? prev : curr;
-    });
-
-    console.log(maxY.y);
-
-    limitedRangeProducts.sort(function(a,b) {
-      return ( b.y/maxY.y*5 + (1-(b.xR/maxX.xR))*(5) ) - ( a.y/maxY.y*5 + (1-(a.xR/maxX.xR))*(5) )
-    });
-
-    $scope.slider = {
-      min: minPrice || 0,
-      max: maxPrice || Math.ceil(maxX.xR),
-      options: {
-        floor: 0,
-        ceil: Math.ceil(maxXOriginal.xR),
-        minRange: Math.round(maxXOriginal.xR/10),
-        noSwitching: true,
-        onEnd: function() {
-          sortByRatingAndPrice(products, $scope.slider.min, $scope.slider.max);
-        }
-      }
-    };
-
-    var topPoints = {};
-    topPoints.values = [];
-    for (var i = 0; i < numResults; i++){
-      topPoints.values[i] = limitedRangeProducts[i];
-    }
-    // topPoints.values = limitedRangeProducts;
-
-    console.log(topPoints.values);
-    console.log(limitedRangeProducts);
-
-    topPoints.key = products.key;
-    
-
-    chart.series[0].setData(topPoints.values);
-
-    $scope.products = topPoints.values;
-
   }
 
   function getProductsInRange(permitProducts, minPrice, maxPrice) {

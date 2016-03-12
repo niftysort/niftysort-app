@@ -87,7 +87,7 @@
       <div class="hidden-xs hidden-sm" id="list-top-spacer-md"></div>
       <div class="hidden-md hidden-lg" id="list-top-spacer-xs"></div>
       <div id="list-container">
-        <div class="product-card" ng-repeat="product in products track by $index" data-id={{product.id}} ng-click="renderTest(product.id)">
+        <div class="product-card" ng-repeat="product in topProducts | limitTo: 10" data-id={{product.id}} ng-click="renderTest(product.id)">
           <div class="card-thumbnail"><img src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
           <div class="card-description">
             <div class="card-title-block">

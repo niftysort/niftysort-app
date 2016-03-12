@@ -160,13 +160,11 @@ var chart = new Highcharts.Chart({
 
     for (var i = 0; i < paths.length; i++) {
       paths[i].classList.remove('hello');
-      // document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
     }
 
     for (var i = 0; i < paths.length; i++) {
       if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
         document.getElementsByTagName("path")[i].classList.add('hello');
-        // document.getElementsByTagName("path")[i].setAttribute('stroke-width', '2');
       }
     }
   }
@@ -181,8 +179,6 @@ var chart = new Highcharts.Chart({
   		console.log('err ',err);
   	})
   }
-
-
 
   $scope.autoFill= function(categoryInput) {
 
@@ -210,9 +206,12 @@ var chart = new Highcharts.Chart({
     var productsInfo = getProductInfo(products);
     
     $scope.topProducts = graphService.assignPointProperties(productsInfo);
-
+    
     renderGraph($scope.topProducts);
-    initializeSlider(productsInfo.minX, productsInfo.maxX);
+    
+    setTimeout(function() {
+      initializeSlider(productsInfo.minX, productsInfo.maxX);
+    }, 100)
   }
 
 
@@ -240,8 +239,7 @@ var chart = new Highcharts.Chart({
 
     var maxY = productService.getMaxY(permittedProducts);
     var sortedProductsByRating = productService.sortCachedData(rangedProducts, maxX, maxY);
-    var desiredNumResults = permittedProducts.length;
-    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
     var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);  
 
     return {
@@ -257,6 +255,7 @@ var chart = new Highcharts.Chart({
   }
 
   function initializeSlider(minX, maxX) {
+    console.log(minX, maxX);
     $scope.slider.min = minX.xR;
     $scope.slider.max = maxX.xR;
     $scope.slider.options.floor = minX.xR;

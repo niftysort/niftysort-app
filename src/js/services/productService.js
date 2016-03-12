@@ -38,10 +38,8 @@ app.factory('productService', function(){
       });
     },
 
-    //MAX OF 10 PRODUCTS
     getTopResults: (sortedProducts, numResults) => {
-      // return sortedProducts.slice(0, 10);
-      return sortedProducts;
+      return sortedProducts.slice(0, numResults);
     }
 
   };

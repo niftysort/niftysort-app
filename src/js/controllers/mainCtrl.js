@@ -26,7 +26,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     })
     console.log('Possible categories: ', $scope.categoryNames);
   }, function(err) {
-  	console.log(err);
+  	swalNoCategories();
   })
 
   //GET SPECIFIC CATEGORY FROM INPUT
@@ -44,9 +44,26 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
 
     }, function(err) {
     	$scope.category = null;
-    	console.log(err);
+      // TODO: Handle error with UI, notify user that attribute is not recommended.
+      // swalErrorAttribute()
+      swalErrorCategory();
     })
   };
+
+  function swalErrorCategory() {
+    swal({
+      title: "Category Not Available",
+      text: "Please check back a little later!"
+    })
+    $scope.searchCategory = '';
+  }
+
+  function swalNoCategories() {
+    swal({
+      title: "Hmm Something Went Wrong",
+      text: "Don't worry, we're on, try back a little later!"
+    })
+  }
 
 //PASS OPTIONS TO HIGHCHARTS
 var chart = new Highcharts.Chart({

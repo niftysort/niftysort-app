@@ -8,6 +8,12 @@ app.factory('productService', function(){
       });
     },
 
+    sortCachedData: (products, maxX, maxY) => {
+      return products.sort(function(a,b) {
+        return ( b.y/maxY.y*5 + (1-(b.xR/maxX.xR))*(5) ) - ( a.y/maxY.y*5 + (1-(a.xR/maxX.xR))*(5) )
+      });
+    },
+
     getProductsInRange: (permittedProducts, minPrice, maxPrice) => {
       return permittedProducts.filter(function(val) {
         return (val.xR >= minPrice && val.xR <= maxPrice);
@@ -30,6 +36,12 @@ app.factory('productService', function(){
       return products.reduce(function(prev, curr) {
         return (prev.y >= curr.y) ? prev : curr;
       });
+    },
+
+    //MAX OF 10 PRODUCTS
+    getTopResults: (sortedProducts, numResults) => {
+      // return sortedProducts.slice(0, 10);
+      return sortedProducts;
     }
 
   };

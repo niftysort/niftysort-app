@@ -228,25 +228,32 @@ var chart = new Highcharts.Chart({
   }
 
   function getProductInfo(products, minPrice, maxPrice) {
-    var info = {};
-
-    info.permittedProducts = productService.removeZeroValueProducts(products);
-    info.minX = productService.getMinX(info.permittedProducts);
-    info.maxX = productService.getMaxX(info.permittedProducts);
+    var permittedProducts = productService.removeZeroValueProducts(products);
+    var minX = productService.getMinX(permittedProducts);
+    var maxX = productService.getMaxX(permittedProducts);
 
     if (minPrice && maxPrice) {
-      info.rangedProducts = productService.getProductsInRange(info.permittedProducts, minPrice, maxPrice);
+      var rangedProducts = productService.getProductsInRange(permittedProducts, minPrice, maxPrice);
     } else {
-      info.rangedProducts = productService.getProductsInRange(info.permittedProducts, info.minX.xR, info.maxX.xR);
+      var rangedProducts = productService.getProductsInRange(permittedProducts, minX.xR, maxX.xR);
     }
 
-    info.maxY = productService.getMaxY(info.permittedProducts);
-    info.sortedProductsByRating = productService.sortCachedData(info.rangedProducts, info.maxX, info.maxY);
-    info.desiredNumResults = info.permittedProducts.length;
+    var maxY = productService.getMaxY(permittedProducts);
+    var sortedProductsByRating = productService.sortCachedData(rangedProducts, maxX, maxY);
+    var desiredNumResults = permittedProducts.length;
     // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    info.topProducts = productService.getTopResults(info.sortedProductsByRating, info.desiredNumResults);  
+    var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);  
 
-    return info;
+    return {
+      desiredNumResults,
+      maxX,
+      maxY,
+      minX,
+      permittedProducts,
+      rangedProducts,
+      sortedProductsByRating,
+      topProducts
+    };
   }
 
   function initializeSlider(minX, maxX) {

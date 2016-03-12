@@ -8,6 +8,12 @@ app.factory('productService', function(){
       });
     },
 
+    getProductsInRange: (permittedProducts, minPrice, maxPrice) => {
+      return permittedProducts.filter(function(val) {
+        return (val.xR >= minPrice && val.xR <= maxPrice);
+      });
+    },
+
     getMaxX: products => {
       return products.reduce(function(prev, curr) {
         return (prev.xR >= curr.xR) ? prev : curr;
@@ -25,7 +31,6 @@ app.factory('productService', function(){
         return (prev.y >= curr.y) ? prev : curr;
       });
     }
-
 
   };
 

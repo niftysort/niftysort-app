@@ -232,7 +232,7 @@ var chart = new Highcharts.Chart({
     chart.series[0].setData([{}]);
     console.log(minPrice, maxPrice);
     var permittedProducts = productService.removeZeroValueProducts(products);
-    var rangedProducts = getProductsInRange(permittedProducts, minPrice, maxPrice);
+    var rangedProducts = productService.getProductsInRange(permittedProducts, minPrice, maxPrice);
     var maxX = productService.getMaxX(permittedProducts);
     var maxY = productService.getMaxY(permittedProducts);
     var sortedProductsByRating = sortCachedData(rangedProducts, maxX, maxY);
@@ -283,12 +283,6 @@ var chart = new Highcharts.Chart({
   function renderGraph(products) {
     chart.series[0].setData(products, false);
     chart.redraw();
-  }
-
-  function getProductsInRange(permitProducts, minPrice, maxPrice) {
-    return permitProducts.filter(function(val) {
-      return (val.xR >= minPrice && val.xR <= maxPrice);
-    });
   }
 
 });

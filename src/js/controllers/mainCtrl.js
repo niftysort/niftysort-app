@@ -203,8 +203,8 @@ var chart = new Highcharts.Chart({
     var maxY = getMaxY(permittedProducts);
     var sortedProductsByRating = sortCachedData(permittedProducts, maxX, maxY);
 
-    var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    // var desiredNumResults = permittedProducts.length;
+    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    var desiredNumResults = permittedProducts.length;
     var topProducts = getTopResults(sortedProductsByRating, desiredNumResults);
 
     $scope.topProducts = assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
@@ -222,12 +222,13 @@ var chart = new Highcharts.Chart({
     var maxX = getMaxX(permittedProducts);
     var maxY = getMaxY(permittedProducts);
     var sortedProductsByRating = sortCachedData(rangedProducts, maxX, maxY);
-    var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    // var desiredNumResults = permittedProducts.length;
+    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    var desiredNumResults = permittedProducts.length;
 
     var topProducts = getTopResults(sortedProductsByRating, desiredNumResults);
 
     $scope.topProducts = assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
+
     renderGraph($scope.topProducts);
   }
 
@@ -269,8 +270,8 @@ var chart = new Highcharts.Chart({
   }
 
   function getTopResults(sortedProducts, numResults) {
-    return sortedProducts.slice(0, numResults);
-    // return sortedProducts;
+    // return sortedProducts.slice(0, 10);
+    return sortedProducts;
   }
 
   function assignPointProperties(topProducts, maxX, maxY, numResults) {

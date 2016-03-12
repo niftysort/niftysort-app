@@ -11,7 +11,6 @@
               </div>
               <div id="query-input-contain-mobile">
 
-
                 <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
                   <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
                   <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Start by typing the product caterory here!"></input>
@@ -23,7 +22,6 @@
                   <button class="hidden" type='submit'></button>
                 </form>
 
-              <h1>{{autoComplete}}</h1>
               </div>
             </div>
           </div>
@@ -44,7 +42,7 @@
               <div id="bottom-right-label"><span class="graph-label-text">CHEAP! </span></div>
             </div>
             <!-- Add Slider Feature -->
-            <rzslider
+            <rzslider ng-show="products"
               rz-slider-model="slider.min"
               rz-slider-high="slider.max"
               rz-slider-options="slider.options">

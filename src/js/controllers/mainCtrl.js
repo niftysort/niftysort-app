@@ -208,7 +208,7 @@ var chart = new Highcharts.Chart({
     $scope.products = category.values;
     var products = category.values;
 
-    var permittedProducts = removeZeroValueProducts(products);
+    var permittedProducts = productService.removeZeroValueProducts(products);
     var maxX = getMaxX(permittedProducts);
     var minX = getMinX(permittedProducts);
     var maxY = getMaxY(permittedProducts);
@@ -231,7 +231,7 @@ var chart = new Highcharts.Chart({
     $scope.topProducts = [];
     chart.series[0].setData([{}]);
     console.log(minPrice, maxPrice);
-    var permittedProducts = removeZeroValueProducts(products);
+    var permittedProducts = productService.removeZeroValueProducts(products);
     var rangedProducts = getProductsInRange(permittedProducts, minPrice, maxPrice);
     var maxX = getMaxX(permittedProducts);
     var maxY = getMaxY(permittedProducts);
@@ -251,12 +251,6 @@ var chart = new Highcharts.Chart({
     $scope.slider.max = maxX.xR;
     $scope.slider.options.floor = minX.xR;
     $scope.slider.options.ceil = maxX.xR;
-  }
-
-  function removeZeroValueProducts(products) {
-    return products.filter(function(val) {
-      return (val.xR && val.y);
-    });
   }
 
   //get maximum price of products

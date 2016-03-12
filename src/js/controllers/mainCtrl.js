@@ -157,17 +157,6 @@ var chart = new Highcharts.Chart({
   }
 
 
-// v------------ Leave for testing purposes (fake data and chart responsive) ----------------v
-
-// $scope.changeData = function() {
-//   console.log('test');
-//   chart.series[0].setData([{name:'penis',x: -3, y:0.8, marker: { radius: 10, color: 'black'}}, {name:'tanzy',x: -6, y:1, marker: { radius: 30}}, {x: -2, y:-4, marker: { radius: 60}}], true)
-// }
-
-// ^------------ Leave for testing purposes (fake data and chart responsive) ----------------^
-
-
-
   $scope.getGraph = function() {
   	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
   	.then(function(resp) {
@@ -196,27 +185,39 @@ var chart = new Highcharts.Chart({
     }
   }
 
-  function sortByRatingAndPrice(products, minPrice, maxPrice) {
-    var numResults = 10;
-    
 
+  function sortByRatingAndPrice(products, minPrice, maxPrice) {
+
+    console.log(minPrice, maxPrice);
+    
     var permittedProducts = removeZeroValueProducts(products);
 
-    console.log(permittedProducts);
-
-    var limitedRangeProducts = getProductsInRange(permittedProducts, $scope.slider.min, $scope.slider.max)
-
-    console.log(limitedRangeProducts);
-
-    var maxX = permittedProducts.reduce(function(prev, curr) {
+    var maxXOriginal = permittedProducts.reduce(function(prev, curr) {
       return (prev.xR > curr.xR) ? prev : curr;
     });
 
-    var maxY = permittedProducts.reduce(function(prev, curr) {
+    $scope.slider.min = minPrice || 0;
+    $scope.slider.max = maxPrice || maxXOriginal.xR;
+
+
+    var limitedRangeProducts = getProductsInRange(permittedProducts, $scope.slider.min, $scope.slider.max)
+
+    var numResults = (limitedRangeProducts.length > 10) ? 10 : limitedRangeProducts.length;
+
+
+    var maxX = limitedRangeProducts.reduce(function(prev, curr) {
+      return (prev.xR > curr.xR) ? prev : curr;
+    });
+
+    console.log(maxX.xR);
+
+    var maxY = limitedRangeProducts.reduce(function(prev, curr) {
       return (prev.y > curr.y) ? prev : curr;
     });
 
-    permittedProducts.sort(function(a,b) {
+    console.log(maxY.y);
+
+    limitedRangeProducts.sort(function(a,b) {
       return ( b.y/maxY.y*5 + (1-(b.xR/maxX.xR))*(5) ) - ( a.y/maxY.y*5 + (1-(a.xR/maxX.xR))*(5) )
     });
 
@@ -225,18 +226,22 @@ var chart = new Highcharts.Chart({
       max: maxPrice || Math.ceil(maxX.xR),
       options: {
         floor: 0,
-        ceil: Math.ceil(maxX.xR),
-        minRange: Math.round(maxX.xR/10),
+        ceil: Math.ceil(maxXOriginal.xR),
+        minRange: Math.round(maxXOriginal.xR/10),
         noSwitching: true,
         onEnd: function() {
           console.log('ya');
-          sortByRatingAndPrice(permittedProducts, $scope.slider.min, $scope.slider.max);
+          sortByRatingAndPrice(products, $scope.slider.min, $scope.slider.max);
         }
       }
     };
 
     var topPoints = {};
-    topPoints.values = permittedProducts.slice(0, numResults);
+    topPoints.values = limitedRangeProducts.slice(0, numResults);
+
+    console.log(topPoints.values);
+    console.log(limitedRangeProducts);
+
     topPoints.key = products.key;
     var size = topPoints.values.length;
     var color = 0;
@@ -250,9 +255,7 @@ var chart = new Highcharts.Chart({
       color += Math.round(200/numResults);
     })
     $scope.data = [topPoints];
-    // console.log($scope.data);
     chart.series[0].setData($scope.data[0].values);
-
 
     $scope.products = $scope.data[0].values;
 

@@ -53,7 +53,7 @@ var chart = new Highcharts.Chart({
   chart: {
     renderTo: 'container',
     type: 'scatter',
-    zoomType: 'xy'
+    zoomType: ''
   },
   title: {
     text: null

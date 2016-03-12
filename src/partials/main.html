@@ -89,10 +89,7 @@
       <div id="list-container">
         <!-- <div class="product-card" ng-repeat="product in topProducts | limitTo: 10" data-id={{product.id}} ng-click="renderTest(product.id)"> -->
         <div class="product-card" ng-repeat="product in topProducts" data-id={{product.id}} ng-click="renderTest(product.id)">
-          <div style="margin-top: -16px; height: 10px;">
-            <p> Y: {{product.y}}  X: {{product.x}}  radius: {{product.marker.radius}} color: {{product.marker.fillColor}} </p>
-          </div>
-          <!-- <div class="card-thumbnail"><img src={{product.info.imgLarge[0]}} class="product-thumbnail"></div> -->
+          <div class="card-thumbnail"><img src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
           <div class="card-description">
             <div class="card-title-block">
               <span class="card-title" ng-if="product.name.length > 60">{{product.name.substring(0,60)}}...</span>

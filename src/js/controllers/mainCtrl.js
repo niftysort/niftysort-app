@@ -209,7 +209,7 @@ var chart = new Highcharts.Chart({
     var products = category.values;
     var productsInfo = getProductInfo(products);
     
-    $scope.topProducts = graphService.assignPointProperties(productsInfo.topProducts, productsInfo.maxX, productsInfo.maxY, productsInfo.desiredNumResults);
+    $scope.topProducts = graphService.assignPointProperties(productsInfo);
 
     renderGraph($scope.topProducts);
     initializeSlider(productsInfo.minX, productsInfo.maxX);
@@ -222,7 +222,7 @@ var chart = new Highcharts.Chart({
     var products = $scope.products;
     var productsInfo = getProductInfo(products, minPrice, maxPrice);
 
-    $scope.topProducts = graphService.assignPointProperties(productsInfo.topProducts, productsInfo.maxX, productsInfo.maxY, productsInfo.desiredNumResults);
+    $scope.topProducts = graphService.assignPointProperties(productsInfo);
 
     renderGraph($scope.topProducts);
   }

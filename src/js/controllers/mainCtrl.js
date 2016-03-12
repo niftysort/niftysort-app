@@ -207,51 +207,46 @@ var chart = new Highcharts.Chart({
   function cacheCategoryData(category) {
     $scope.products = category.values;
     var products = category.values;
-
-    var permittedProducts = productService.removeZeroValueProducts(products);
-    var maxX = productService.getMaxX(permittedProducts);
-    var maxY = productService.getMaxY(permittedProducts);
-    var sortedProductsByRating = productService.sortCachedData(permittedProducts, maxX, maxY);
-    var desiredNumResults = permittedProducts.length;
-    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);
+    var productsInfo = getProductInfo(products);
     
-
-    var minX = productService.getMinX(permittedProducts);
-
-
-    $scope.topProducts = graphService.assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
+    $scope.topProducts = graphService.assignPointProperties(productsInfo.topProducts, productsInfo.maxX, productsInfo.maxY, productsInfo.desiredNumResults);
 
     renderGraph($scope.topProducts);
-    initializeSlider(minX, maxX);
+    initializeSlider(productsInfo.minX, productsInfo.maxX);
   }
 
 
   //ON SLIDER CHANGE TAKE IN SLIDER MIN MAX AND RE-CALC RANGE
   function getRangeTopProducts(minPrice, maxPrice) {
-    var products = $scope.products;
-    $scope.topProducts = [];
     chart.series[0].setData([{}]);
+    var products = $scope.products;
+    var productsInfo = getProductInfo(products, minPrice, maxPrice);
 
-    var permittedProducts = productService.removeZeroValueProducts(products);
-
-    var rangedProducts = productService.getProductsInRange(permittedProducts, minPrice, maxPrice);
-
-    var maxX = productService.getMaxX(permittedProducts);
-    var maxY = productService.getMaxY(permittedProducts);
-    var sortedProductsByRating = productService.sortCachedData(rangedProducts, maxX, maxY);
-    var desiredNumResults = permittedProducts.length;
-    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);
-    
-
-    $scope.topProducts = graphService.assignPointProperties(topProducts, maxX, maxY, desiredNumResults);
+    $scope.topProducts = graphService.assignPointProperties(productsInfo.topProducts, productsInfo.maxX, productsInfo.maxY, productsInfo.desiredNumResults);
 
     renderGraph($scope.topProducts);
   }
 
-  function getPermittedProducts() {
+  function getProductInfo(products, minPrice, maxPrice) {
+    var info = {};
 
+    info.permittedProducts = productService.removeZeroValueProducts(products);
+    info.minX = productService.getMinX(info.permittedProducts);
+    info.maxX = productService.getMaxX(info.permittedProducts);
+
+    if (minPrice && maxPrice) {
+      info.rangedProducts = productService.getProductsInRange(info.permittedProducts, minPrice, maxPrice);
+    } else {
+      info.rangedProducts = productService.getProductsInRange(info.permittedProducts, info.minX.xR, info.maxX.xR);
+    }
+
+    info.maxY = productService.getMaxY(info.permittedProducts);
+    info.sortedProductsByRating = productService.sortCachedData(info.rangedProducts, info.maxX, info.maxY);
+    info.desiredNumResults = info.permittedProducts.length;
+    // var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
+    info.topProducts = productService.getTopResults(info.sortedProductsByRating, info.desiredNumResults);  
+
+    return info;
   }
 
   function initializeSlider(minX, maxX) {

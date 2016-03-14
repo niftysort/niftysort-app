@@ -197,11 +197,24 @@ var chart = new Highcharts.Chart({
 
     for (var i = 0; i < paths.length; i++) {
       paths[i].classList.remove('hello');
+      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '0');
     }
+    generateBorderColor(paths, pointColor);
+    
+  }
 
+  function generateBorderColor(paths, pointColor) {
     for (var i = 0; i < paths.length; i++) {
-      if (document.getElementsByTagName("path")[i].getAttribute('fill') === pointColor) {
-        document.getElementsByTagName("path")[i].classList.add('hello');
+      var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
+      if (selectedPointColor === pointColor) {
+        var rgbArray = selectedPointColor.split(',').map(function(col) {
+          return col.replace(/[^0-9]/g, "");
+        });
+        var colorR = rgbArray[0] - 50;
+        var colorG = rgbArray[1] - 50;
+        var colorB = rgbArray[2];
+        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '5');
+        document.getElementsByTagName("path")[i].setAttribute('stroke', `rgb(${colorR},${colorG},${colorB})`);
       }
     }
   }

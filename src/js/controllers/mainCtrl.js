@@ -1,5 +1,5 @@
 
-app.controller('mainCtrl', function(categoryService, graphService, productService, $scope, $anchorScroll, $location){
+app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
   console.log('main controller loaded!');
 
   // ASSIGN SLIDER OPTIONS
@@ -7,6 +7,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     min: 0,
     max: 100,
     options: {
+      step: 0.01,
       floor: 0,
       ceil: 100,
       minRange: 10,
@@ -71,6 +72,9 @@ var chart = new Highcharts.Chart({
     renderTo: 'container',
     type: 'scatter',
     zoomType: ''
+  },
+  credits: {
+    enabled: false
   },
   title: {
     text: null
@@ -163,10 +167,13 @@ var chart = new Highcharts.Chart({
   }
 
   function goToProduct(id) {
-    console.log('scroll');
-    var newHash = id;
-      $location.hash(id);
-      $anchorScroll();
+    if(window.innerWidth > 768){
+      var offset = 340;
+    }else{
+      var offset = 460;
+    }
+    var $targetElem = $('div').find(`[data-id="${id}"]`)
+    $("body").animate({scrollTop: $targetElem.offset().top - offset}, "slow");
   }
 
   //remove class hola from all product cards and add only to correct card
@@ -234,11 +241,11 @@ var chart = new Highcharts.Chart({
     $scope.products = category.values;
     var products = category.values;
     var productsInfo = getProductInfo(products);
-    
+
     $scope.topProducts = graphService.assignPointProperties(productsInfo);
-    
+
     renderGraph($scope.topProducts);
-    
+
     setTimeout(function() {
       initializeSlider(productsInfo.minX, productsInfo.maxX);
     }, 100)
@@ -270,7 +277,7 @@ var chart = new Highcharts.Chart({
     var maxY = productService.getMaxY(permittedProducts);
     var sortedProductsByRating = productService.sortCachedData(rangedProducts, maxX, maxY);
     var desiredNumResults = (permittedProducts.length > 10) ? 10 : sortedProductsByRating.length;
-    var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);  
+    var topProducts = productService.getTopResults(sortedProductsByRating, desiredNumResults);
 
     return {
       desiredNumResults,
@@ -298,7 +305,3 @@ var chart = new Highcharts.Chart({
   }
 
 });
-
-app.run(function($anchorScroll) {
-  $anchorScroll.yOffset = 320;   // always scroll by 50 extra pixels
-})

@@ -8,6 +8,26 @@ app.factory('productService', function(){
       });
     },
 
+    removeHiddenCharacters: topProducts => {
+      topProducts.forEach( product => {
+        product.info.features = product.info.features.map( feature => {
+          var words = feature.replace(/[^\x00-\x7F]/g, "")
+            .split(/,?\s+/);
+          // Some sentences from amazon features have no spaces between words.
+          words = words.map( word => {
+            if (word.length > 30) {
+              return '';
+            } else {
+              return word;
+            }
+          });
+          return words.join(' ');
+        });
+      });
+
+      return topProducts;
+    },
+
     sortCachedData: (products, maxX, maxY) => {
       return products.sort(function(a,b) {
         return ( b.y/maxY.y*5 + (1-(b.xR/maxX.xR))*(5) ) - ( a.y/maxY.y*5 + (1-(a.xR/maxX.xR))*(5) )
@@ -18,6 +38,10 @@ app.factory('productService', function(){
       return permittedProducts.filter(function(val) {
         return (val.xR >= minPrice && val.xR <= maxPrice);
       });
+    },
+
+    getTopResults: (sortedProducts, numResults) => {
+      return sortedProducts.slice(0, numResults);
     },
 
     getMaxX: products => {
@@ -37,10 +61,6 @@ app.factory('productService', function(){
         return (prev.y >= curr.y) ? prev : curr;
       });
     },
-
-    getTopResults: (sortedProducts, numResults) => {
-      return sortedProducts.slice(0, numResults);
-    }
 
   };
 

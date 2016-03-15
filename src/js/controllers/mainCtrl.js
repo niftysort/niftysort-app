@@ -186,7 +186,7 @@ var chart = new Highcharts.Chart({
 
     for (var i = 0; i < products.length; i++) {
       if (document.getElementsByClassName('product-card')[i].dataset.id == pointMod[0].id) {
-        var rgb = getPathColor(i);
+        var rgb = getPathColor(products.length - 1 - i);
         document.getElementsByClassName('product-card')[i].style.outline = '5px solid ' + rgb;
       }
     }

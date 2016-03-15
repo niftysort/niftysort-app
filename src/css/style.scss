@@ -261,30 +261,55 @@ input#user-query{
   padding:0px;
 }
 
+
+
+//XS
 @media (max-width:767px) {
   div#chart-contain{
     width:60%;
     float:right;
     margin-right:1px;
+    width: 100%;
+    max-height: 472px;
   }
 }
-
-@media (max-width:991px) {
+//SM
+@media (min-width:768px) and (max-width:991px) {
   div#chart-contain{
     position:relative;
-    margin-left:0px !important;
-    margin-bottom:0px !important;
+    // margin-left:0px !important;
+    // margin-bottom:0px !important;
+    width: 343px;
+    height: 343px;
+    margin-bottom: 30px;
+    background-color: black;
   }
 }
 
-div#chart-contain{
-  position:relative;
-  margin-left:49px;
-  margin-bottom:30px;
-  // JT add width and height
-  width: 90%;
-  height: 400px;
-  // JT add width and height
+//MD desktop
+@media (min-width:992px) and (max-width:1199px){
+  div#chart-contain{
+    position:relative;
+    // margin-left:49px;
+    margin-bottom:30px;
+    // JT add width and height
+    width: 453px;
+    height: 453px;
+    // JT add width and height
+  }
+}
+
+//LG desktop
+@media (min-width:1200px){
+  div#chart-contain{
+    position:relative;
+    // margin-left:49px;
+    margin-bottom:30px;
+    // JT add width and height
+    width: 555px;
+    height: 555px;
+    // JT add width and height
+  }
 }
 
 img#keys{
@@ -364,21 +389,32 @@ img#horiz-line{
   bottom:-121px;
 }
 
-@media (max-width:767px) {
-  div#container{
-    margin-top:0px !important;
-  }
-}
+// @media (max-width:767px) {
+//   div#container{
+//     margin-top:0px !important;
+//   }
+// }
+//
+// @media (max-width:991px) {
+//   div#container{
+//     margin-top:12px;
+//   }
+// }
+// @media (min-width:991px) {
+//   div#container{
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
 
-@media (max-width:991px) {
-  div#container{
-    margin-top:12px;
-  }
-}
-
-div#container{
+.chart-container-style {
   border:1px solid #D8D8D8;
   box-shadow:4px 4px 21px rgba(0,0,0,0.09);
+}
+
+div#container {
+  width: 100%;
+  height: 100%;
 }
 
 // div#test1{

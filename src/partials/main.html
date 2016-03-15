@@ -42,7 +42,7 @@
               <div id="bottom-right-label"><span class="graph-label-text">CHEAP! </span></div>
             </div>
             <!-- Add Slider Feature -->
-            <rzslider ng-show="products"
+            <rzslider ng-if="products"
               rz-slider-model="slider.min"
               rz-slider-high="slider.max"
               rz-slider-options="slider.options">
@@ -62,7 +62,7 @@
 
                 <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
                   <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
-                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Start by typing the product caterory here!"></input>
+                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Start by typing the product caterory here!" required></input>
                   <button class="hidden" type='submit'></button>
                 </form>
 
@@ -105,8 +105,8 @@
                 <ul>
                   <!-- <li ng-repeat="feature in product.info.features">{{feature}}</li> -->
                   <li>> {{(product.info.features[0].length > 100) ? product.info.features[0].substring(0,100) : product.info.features[0]}}<span ng-if="product.info.features[0].length > 100">...</span></li>
-                  <li>> {{(product.info.features[2].length > 100) ? product.info.features[2].substring(0,100) : product.info.features[2]}}<span ng-if="product.info.features[2].length > 100">...</span></li>
-                  <li>> {{(product.info.features[3].length > 100) ? product.info.features[3].substring(0,100) : product.info.features[3]}}<span ng-if="product.info.features[3].length > 100">...</span></li>
+                  <li>> {{(product.info.features[1].length > 100) ? product.info.features[1].substring(0,100) : product.info.features[1]}}<span ng-if="product.info.features[1].length > 100">...</span></li>
+                  <!-- <li>> {{(product.info.features[3].length > 100) ? product.info.features[3].substring(0,100) : product.info.features[3]}}<span ng-if="product.info.features[3].length > 100">...</span></li> -->
                 </ul>
               </span>
             </div>

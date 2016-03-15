@@ -11,21 +11,6 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
 
 
   // ASSIGN SLIDER OPTIONS
-  $scope.slider = {
-    min: 0,
-    max: 100,
-    options: {
-      step: 0.01,
-      floor: 0,
-      ceil: 100,
-      minRange: 10,
-      noSwitching: true,
-      onEnd: function() {
-        getRangeTopProducts($scope.slider.min, $scope.slider.max);
-      }
-    }
-  };
-
 
   //GET ALL CATEGORIES FROM BACKEND ON PAGE LOAD
   categoryService.retrieveAllCategories()
@@ -268,13 +253,12 @@ var chart = new Highcharts.Chart({
     var products = category.values;
     var productsInfo = getProductInfo(products);
 
-    $scope.topProducts = graphService.assignPointProperties(productsInfo);
+    var topProducts = graphService.assignPointProperties(productsInfo);
+
+    $scope.topProducts = removeHiddenCharacters(topProducts);
 
     renderGraph($scope.topProducts);
-
-    setTimeout(function() {
-      initializeSlider(productsInfo.minX, productsInfo.maxX);
-    }, 100)
+    initializeSlider(productsInfo.minX, productsInfo.maxX);
   }
 
 
@@ -284,7 +268,9 @@ var chart = new Highcharts.Chart({
     var products = $scope.products;
     var productsInfo = getProductInfo(products, minPrice, maxPrice);
 
-    $scope.topProducts = graphService.assignPointProperties(productsInfo);
+    var topProducts = graphService.assignPointProperties(productsInfo);
+
+    $scope.topProducts = removeHiddenCharacters(topProducts);
 
     renderGraph($scope.topProducts);
   }
@@ -317,12 +303,50 @@ var chart = new Highcharts.Chart({
     };
   }
 
+  function removeHiddenCharacters(topProducts) {
+    topProducts.forEach(function(product) {
+      product.info.features = product.info.features.map(function(feature) {
+        var words = feature.replace(/[^\x00-\x7F]/g, "")
+          .split(/,?\s+/);
+        // Some sentences from amazon features have no spaces between words.
+        words = words.map(function(word) {
+          if (word.length > 30) {
+            return '*This feature could not be rendered*'
+          } else {
+            return word;
+          }
+        });
+        return words.join(' ');
+      });
+    });
+
+    return topProducts;
+  }
+
   function initializeSlider(minX, maxX) {
     console.log(minX, maxX);
-    $scope.slider.min = minX.xR;
-    $scope.slider.max = maxX.xR;
-    $scope.slider.options.floor = minX.xR;
-    $scope.slider.options.ceil = maxX.xR;
+
+    $scope.slider = {
+      min: minX.xR,
+      max: maxX.xR,
+      options: {
+        step: 0.01,
+        precision: 2,
+        floor: minX.xR,
+        translate: function(value) {
+          return '$' + value.toFixed(2);
+        },
+        hideLimitLabels: false,
+        disabled: false,
+        minRange: 5,
+        noSwitching: true,
+        // rightToLeft: true,
+        onEnd: function() {
+          getRangeTopProducts($scope.slider.min, $scope.slider.max);
+        }
+      }
+    };
+    
   }
 
   function renderGraph(products) {

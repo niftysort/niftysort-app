@@ -181,7 +181,7 @@ var chart = new Highcharts.Chart({
       var offset = 460;
     }
     var $targetElem = $('div').find(`[data-id="${id}"]`)
-    $("body").animate({scrollTop: $targetElem.offset().top - offset}, "slow");
+    $("body, html").animate({scrollTop: $targetElem.offset().top - offset}, "slow");
   }
 
   //remove class hola from all product cards and add only to correct card
@@ -217,7 +217,7 @@ var chart = new Highcharts.Chart({
       }
     }
 
-    
+
   }
 
   function getPathColor(i) {
@@ -230,7 +230,7 @@ var chart = new Highcharts.Chart({
     var colorB = rgbArray[2];
     return `rgb(${colorR},${colorG},${colorB})`;
   }
-        
+
 
   //get products of category from backend and send to cache
   $scope.getGraph = function() {

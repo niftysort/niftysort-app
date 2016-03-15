@@ -1,0 +1,307 @@
+
+//MAIN STYLING
+#header-bg-logo{
+  position:absolute;
+  width:56%;
+}
+
+.header-bg{
+  overflow:hidden;
+  position:absolute;
+  width:100%;
+  height:300px;
+}
+
+img.header-gradient{
+  width:120%;
+  min-width:1440px;
+}
+
+body{
+  background-color:white;
+  height:5000px;
+}
+
+img.graph{
+  width:100%;
+  background-color:white;
+}
+
+.header-block-mobile{
+  width:100%;
+}
+
+.header-block{
+  margin-top:60px;
+  width:100%;
+  height:204px;
+}
+
+.logo-block-mobile{
+  padding-left:0px;
+  margin-left:-9px;
+}
+
+.logo-block{
+}
+
+#brand-top-mobile{
+  font-size:14px;
+  color:white;
+  letter-spacing:1.08px;
+  margin-left:7px;
+  font-family:'Open Sans', sans-serif;
+  font-weight:300;
+  display:inline-block;
+  margin-top:2px;
+}
+
+#brand-top{
+  font-size:21px;
+  color:white;
+  letter-spacing:1.08px;
+  margin-left:7px;
+  font-family:'Open Sans', sans-serif;
+  font-weight:300;
+  display:inline-block;
+  margin-top:2px;
+}
+
+img#white-logo-mobile{
+  margin-top:-2px;
+  height:15px;
+}
+
+img#white-logo{
+  margin-top:-2px;
+  height:15px;
+}
+
+#query-input-contain-mobile{
+  margin-top:2px;
+  width:100%;
+}
+
+#query-input-contain{
+  margin-top:70px;
+  height:107px;
+  width:100%;
+  position: relative;
+}
+
+
+
+@media (max-width:767px) {
+  div#chart-contain{
+    width:60%;
+    float:right;
+    margin-right:1px;
+  }
+}
+
+div#chart-contain{
+  position:relative;
+  margin-left:49px;
+  margin-bottom:30px;
+}
+
+img#keys{
+  position:absolute;
+  height:539px;
+  margin-left:-53px;
+  margin-top:39px;
+}
+
+
+#side-keys-contain{
+  margin-top:60px;
+  height:503px;
+  background-color:black;
+}
+
+div#left-top-label{
+  position:absolute;
+  top:0;
+  left:-61px;
+}
+
+#left-midde-label{
+  position:absolute;
+  top:50%;
+  left:-15px;
+}
+
+#left-bottom-label{
+  position:absolute;
+  left:-55px;
+  bottom:0px;
+}
+
+#bottom-left-label{
+  position:absolute;
+  left:0px;
+  bottom:-27px;
+}
+
+div#bottom-middle-label{
+  position:absolute;
+  left:50%;
+}
+
+div#bottom-right-label{
+  position:absolute;
+  bottom:-27px;
+  right:0px;
+}
+
+img#vert-line{
+  position:absolute;
+  top:-102px;
+}
+
+span.graph-label-text{
+  color:rgb(215,215,215);
+  font-size:10px;
+  letter-spacing:1px;
+  float:right;
+}
+
+#white-text{
+  color:white;
+}
+
+#no-float{
+  float:none;
+}
+
+img#horiz-line{
+  transform:rotate(90deg);
+  position:absolute;
+  bottom:-121px;
+}
+
+@media (max-width:767px) {
+  div#container{
+    margin-top:0px !important;
+  }
+}
+
+div#container{
+  border:1px solid #D8D8D8;
+  margin-top:60px;
+  box-shadow:4px 4px 21px rgba(0,0,0,0.09);
+}
+
+div#test1{
+  background-color:black;
+  height:100px;
+}
+
+.stick-top{
+}
+
+#list-top-spacer-md{
+  height:40px;
+}
+
+#list-top-spacer-xs{
+  height:57px;
+}
+
+.list-container{
+  height:150px;
+}
+
+div#tesmptest{
+  background-color:grey;
+  height:1000px;
+  margin-top:100px;
+}
+
+.product-card{
+  height:228px;
+  background-color:rgb(234,233,233);
+  margin-top:37px;
+  position:relative;
+  border:1px solid #D8D8D8;
+  box-shadow:2px 2px 13px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-placeholder{
+  margin-top:37px;
+  position:relative;
+}
+
+.product-card-placeholder img {
+  width: 100%;
+}
+
+#top-product{
+  margin-top:0px;
+}
+
+.card-thumbnail{
+  height:226px;
+  width:226px;
+  display:inline-block;
+}
+
+img.product-thumbnail{
+  height:100%;
+  width:100%;
+  border:0px !important;
+}
+
+.card-description{
+  display:inline-block;
+  height:100%;
+  top:0;
+  position:absolute;
+  padding-top:6px;
+  padding-left:10px;
+}
+
+span.card-title{
+  color:#585858;
+  font-size:16px;
+  font-family:'Open Sans', sans-serif;
+  display:block;
+  font-weight:600;
+}
+
+.card-sub-title{
+  font-size:14px;
+  color:grey;
+  display:block;
+  margin-top:-1px;
+}
+
+span.card-text-description{
+  display:block;
+  margin-top:10px;
+  font-size:11px;
+  color:rgb(109,109,109);
+  padding-right:15px;
+}
+
+span.card-text-description > ul{
+  padding-left: 10px;
+}
+
+span.card-text-description > ul > li{
+  list-style-type: none;
+  margin-bottom: 4px;
+}
+
+div#sticky-test{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:2;
+  width:100%;
+}
+
+div#list-test.row{
+  margin-top:262px;
+  z-index:1;
+}

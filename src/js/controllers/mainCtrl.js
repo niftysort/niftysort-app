@@ -2,6 +2,14 @@
 app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
   console.log('main controller loaded!');
 
+
+  //SET NUM OF PLACHOLDER CARDS
+  $scope.numOfPlacholders = 10;
+  $scope.getPlaceholders = function(num){
+    return new Array(num);
+  }
+
+
   // ASSIGN SLIDER OPTIONS
   $scope.slider = {
     min: 0,

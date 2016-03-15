@@ -364,7 +364,7 @@ div#test1{
   height:57px;
 }
 
-#list-container{
+.list-container{
   height:150px;
 }
 
@@ -381,6 +381,15 @@ div#tesmptest{
   position:relative;
   border:1px solid #D8D8D8;
   box-shadow:2px 2px 13px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-placeholder{
+  margin-top:37px;
+  position:relative;
+}
+
+.product-card-placeholder img {
+  width: 100%;
 }
 
 #top-product{

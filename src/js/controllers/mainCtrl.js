@@ -255,7 +255,7 @@ var chart = new Highcharts.Chart({
 
     var topProducts = graphService.assignPointProperties(productsInfo);
 
-    $scope.topProducts = removeHiddenCharacters(topProducts);
+    $scope.topProducts = productService.removeHiddenCharacters(topProducts);
 
     renderGraph($scope.topProducts);
     initializeSlider(productsInfo.minX, productsInfo.maxX);
@@ -270,7 +270,7 @@ var chart = new Highcharts.Chart({
 
     var topProducts = graphService.assignPointProperties(productsInfo);
 
-    $scope.topProducts = removeHiddenCharacters(topProducts);
+    $scope.topProducts = productService.removeHiddenCharacters(topProducts);
 
     renderGraph($scope.topProducts);
   }
@@ -301,26 +301,6 @@ var chart = new Highcharts.Chart({
       sortedProductsByRating,
       topProducts
     };
-  }
-
-  function removeHiddenCharacters(topProducts) {
-    topProducts.forEach(function(product) {
-      product.info.features = product.info.features.map(function(feature) {
-        var words = feature.replace(/[^\x00-\x7F]/g, "")
-          .split(/,?\s+/);
-        // Some sentences from amazon features have no spaces between words.
-        words = words.map(function(word) {
-          if (word.length > 30) {
-            return '*This feature could not be rendered*'
-          } else {
-            return word;
-          }
-        });
-        return words.join(' ');
-      });
-    });
-
-    return topProducts;
   }
 
   function initializeSlider(minX, maxX) {

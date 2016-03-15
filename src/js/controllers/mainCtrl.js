@@ -48,6 +48,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     $scope.category = '';
     $scope.searchCategory = '';
     $scope.autoComplete = '';
+    $scope.attribute = '';
     $scope.products = null;
     $scope.topProducts = null;
 

@@ -47,9 +47,9 @@
               <div id="bottom-right-label" class="chart-labels"><span class="graph-label-text">CHEAP! </span></div>
             </div>
 
-            <div class="hidden-xs hidden-sm" id="slider-container-md"><span class="info-title">Adjust Price Range</span>
+            <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products"><span class="info-title">Adjust Price Range</span>
               <!-- Add Slider Feature -->
-              <rzslider ng-if="products"
+              <rzslider 
               rz-slider-model="slider.min"
               rz-slider-high="slider.max"
               rz-slider-options="slider.options">

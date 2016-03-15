@@ -24,8 +24,8 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   })
 
   //GET SPECIFIC CATEGORY FROM INPUT
-  $scope.getCategory = function() {
-    categoryService.retrieveCategory($scope.searchCategory)
+  $scope.getCategory = function(searchCategory) {
+    categoryService.retrieveCategory(searchCategory)
     .then(function(resp) {
       $scope.category = {
         id: resp.data._id,
@@ -51,8 +51,11 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     $scope.attribute = '';
     $scope.products = null;
     $scope.topProducts = null;
-
   }
+
+  // ------------- *** for testing only *** --------------
+  $scope.attributes = ["comfortable", "light", "heavy", "durable", "stylish", "sound", "loud", "noise", "wear", "ears"];
+  // ------------- *** for testing only *** --------------
 
   function swalErrorCategory() {
     swal({
@@ -228,8 +231,9 @@ var chart = new Highcharts.Chart({
 
 
   //get products of category from backend and send to cache
-  $scope.getGraph = function() {
-  	graphService.retrieveGraphData($scope.category.id, $scope.attribute)
+  $scope.getGraph = function(attribute) {
+    $scope.attribute = attribute;
+  	graphService.retrieveGraphData($scope.category.id, attribute)
   	.then(function(resp) {
       cacheCategoryData(resp.data);
   	}, function(err) {

@@ -70,13 +70,13 @@
 
                 <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
 
-                <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
+                <form ng-submit="getCategory(searchCategory)" class="form-inline " autocomplete="off" ng-show="!category">
                   <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
                   <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Enter Category" required></input>
                   <button class="hidden" type='submit'></button>
                 </form>
 
-                <form ng-submit="getGraph()" class="form-inline " autocomplete="off" ng-show="category">
+                <form ng-submit="getGraph(attribute)" class="form-inline " autocomplete="off" ng-show="category">
                   <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
                   <button class="hidden" type='submit'></button>
                 </form>
@@ -84,22 +84,17 @@
 
               <div id="attributes-panel" ng-show="!category">
                 <span class="attributes-label">Suggested: </span>
-                <span class="tag" ng-repeat="cat in categoryNames">{{cat}}</span>
+                <span class="tag" ng-repeat="cat in categoryNames" ng-click="getCategory(cat)">{{cat}}</span>
               </div>
 
+              <!-- TODO: use this when suggested attributes poplulated dynamically -->
+              
               <div id="attributes-panel" ng-show="category">
                 <span class="attributes-label">Suggested: </span>
-                <span class="tag">comfortable </span>
-                <span class="tag">light </span>
-                <span class="tag">bass heavy</span>
-                <span class="tag">durable </span>
-                <span class="tag">comfortable </span>
-                <span class="tag">heavy </span>
-                <span class="tag">heavy </span>
-                <span class="tag">heavy </span>
-                <span class="tag">comfortable </span>
-                <span class="tag">stylish </span>
+                <span class="tag" ng-repeat="att in attributes" ng-click="getGraph(att)">{{att}}</span>
               </div>
+
+              <!-- TODO: use this when suggested attributes poplulated dynamically -->
 
               <div class="visible-sm-block slider-container-sm">
                 <span id="slider-label-sm">Adjust Price Range</span>

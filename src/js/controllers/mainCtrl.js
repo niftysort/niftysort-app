@@ -181,17 +181,17 @@ var chart = new Highcharts.Chart({
     var products = document.getElementsByClassName('product-card');
 
     for (var i = 0; i < products.length; i++) {
-      products[i].classList.remove('hola');
+      document.getElementsByClassName('product-card')[i].style.outline = '';
     }
 
     for (var i = 0; i < products.length; i++) {
       if (document.getElementsByClassName('product-card')[i].dataset.id == pointMod[0].id) {
-        document.getElementsByClassName('product-card')[i].classList.add('hola');
+        var rgb = getPathColor(i);
+        document.getElementsByClassName('product-card')[i].style.outline = '5px solid ' + rgb;
       }
     }
   }
 
-  //remove hola from all markers that aren't selected then add to correct one
   function togglePointHighlight(pointColor) {
     var paths = document.getElementsByTagName("path");
 
@@ -199,25 +199,30 @@ var chart = new Highcharts.Chart({
       paths[i].classList.remove('hello');
       document.getElementsByTagName("path")[i].setAttribute('stroke-width', '0');
     }
-    generateBorderColor(paths, pointColor);
-    
-  }
 
-  function generateBorderColor(paths, pointColor) {
     for (var i = 0; i < paths.length; i++) {
       var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
       if (selectedPointColor === pointColor) {
-        var rgbArray = selectedPointColor.split(',').map(function(col) {
-          return col.replace(/[^0-9]/g, "");
-        });
-        var colorR = rgbArray[0] - 50;
-        var colorG = rgbArray[1] - 50;
-        var colorB = rgbArray[2];
+        var rgb = getPathColor(i);
         document.getElementsByTagName("path")[i].setAttribute('stroke-width', '5');
-        document.getElementsByTagName("path")[i].setAttribute('stroke', `rgb(${colorR},${colorG},${colorB})`);
+        document.getElementsByTagName("path")[i].setAttribute('stroke', rgb);
       }
     }
+
+    
   }
+
+  function getPathColor(i) {
+    var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
+    var rgbArray = selectedPointColor.split(',').map(function(col) {
+      return col.replace(/[^0-9]/g, "");
+    });
+    var colorR = rgbArray[0] - 50;
+    var colorG = rgbArray[1] - 50;
+    var colorB = rgbArray[2];
+    return `rgb(${colorR},${colorG},${colorB})`;
+  }
+        
 
   //get products of category from backend and send to cache
   $scope.getGraph = function() {

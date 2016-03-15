@@ -114,7 +114,15 @@ span.card-text-description > ul > li{
   margin-bottom: 4px;
 }
 
+// JT 'add' .categoryX
+sup.categoryX {
+  color: gray;
+}
 
+sup.categoryX:hover {
+  cursor: pointer;
+  color: white;
+}
 
 
 

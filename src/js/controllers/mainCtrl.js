@@ -44,6 +44,15 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     })
   };
 
+  $scope.newCategory = function() {
+    $scope.category = '';
+    $scope.searchCategory = '';
+    $scope.autoComplete = '';
+    $scope.products = null;
+    $scope.topProducts = null;
+
+  }
+
   function swalErrorCategory() {
     swal({
       title: "Category Not Available",

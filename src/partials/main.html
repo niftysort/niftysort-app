@@ -18,7 +18,7 @@
                 </form>
 
                 <form ng-submit="getGraph()" class="form-inline " autocomplete="off" ng-show="category">
-                  <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
+                  <!-- <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input> -->
                   <button class="hidden" type='submit'></button>
                 </form>
 
@@ -68,7 +68,7 @@
 
               <div id="query-input-contain">
 
-                <span ng-show="category" class="active-category">{{category.name}}</span>
+                <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
 
                 <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
                   <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
@@ -82,7 +82,12 @@
                 </form>
               </div>
 
-              <div id="attributes-panel">
+              <div id="attributes-panel" ng-show="!category">
+                <span class="attributes-label">Suggested: </span>
+                <span class="tag" ng-repeat="cat in categoryNames">{{cat}}</span>
+              </div>
+
+              <div id="attributes-panel" ng-show="category">
                 <span class="attributes-label">Suggested: </span>
                 <span class="tag">comfortable </span>
                 <span class="tag">light </span>

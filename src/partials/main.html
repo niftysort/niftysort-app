@@ -32,7 +32,11 @@
           <div class="col-md-12">
             <div class="brand"><img src="/img/logo.svg" id="top-logo"></div>
             <div id="chart-contain">
-              <div id="container">
+
+              <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:504px;height:400px;overflow:hidden;" aria-live="polite">
+              </div>
+
+              <div ng-show="topProducts" id="container">
                 <!-- <img class="img-responsive graph" src="img/chart-noborder.svg"> -->
               </div>
               <div id="left-top-label" class="chart-labels"><span class="hidden-md hidden-lg graph-label-text">PERFECT! </span><span class="hidden-xs hidden-sm graph-label-text" id="white-text">PERFECT! </span></div>

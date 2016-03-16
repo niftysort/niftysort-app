@@ -3,12 +3,20 @@ app.factory('categoryService', function($http){
 
   return {
 
-    retrieveCategory: function(userQuery) {
+    retrieveCategory: userQuery => {
       return $http.get('/v1/categories/'+ userQuery);
     },
 
-    retrieveAllCategories: function() {
+    retrieveAllCategories: () => {
       return $http.get('/v1/categories');
+    },
+
+    clearInput: () => {
+    	return '';
+    },
+
+    reset: () => {
+    	return '';
     }
 
   }

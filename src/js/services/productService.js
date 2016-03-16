@@ -62,6 +62,14 @@ app.factory('productService', function(){
       });
     },
 
+    resetAll: () => {
+      return null;
+    },
+
+    resetTop: () => {
+      return null;
+    }
+
   };
 
 });

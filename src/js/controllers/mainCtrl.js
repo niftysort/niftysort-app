@@ -1,5 +1,5 @@
 
-app.controller('mainCtrl', function(categoryService, graphService, productService, $scope){
+app.controller('mainCtrl', function(categoryService, graphService, productService, swalService, $scope){
   console.log('main controller loaded!');
 
 
@@ -45,12 +45,15 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   };
 
   $scope.newCategory = function() {
-    $scope.category = '';
-    $scope.searchCategory = '';
+    $scope.category = categoryService.reset();
+    $scope.searchCategory = categoryService.clearInput();
     $scope.autoComplete = '';
     $scope.attribute = '';
-    $scope.products = null;
-    $scope.topProducts = null;
+    $scope.products = productService.resetAll();
+    $scope.topProducts = productService.resetTop();
+    setTimeout(function() {
+      document.getElementById("category-query").focus();
+    },50)
   }
 
   // ------------- *** for testing only *** --------------
@@ -58,18 +61,12 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   // ------------- *** for testing only *** --------------
 
   function swalErrorCategory() {
-    swal({
-      title: "Category Not Available",
-      text: "Please check back a little later!"
-    })
-    $scope.searchCategory = '';
+    swalService.errorCategory();
+    $scope.searchCategory = categoryService.clearInput();
   }
 
   function swalNoCategories() {
-    swal({
-      title: "Hmm Something Went Wrong",
-      text: "Don't worry, we're on, try back a little later!"
-    })
+    swalService.noCategory();
   }
 
 //PASS OPTIONS TO HIGHCHARTS
@@ -235,6 +232,7 @@ var chart = new Highcharts.Chart({
     $scope.attribute = attribute;
   	graphService.retrieveGraphData($scope.category.id, attribute)
   	.then(function(resp) {
+      console.log(resp.data);
       cacheCategoryData(resp.data);
   	}, function(err) {
   		$scope.data = [];
@@ -334,7 +332,6 @@ var chart = new Highcharts.Chart({
         disabled: false,
         minRange: 5,
         noSwitching: true,
-        // rightToLeft: true,
         onEnd: function() {
           getRangeTopProducts($scope.slider.min, $scope.slider.max);
         }

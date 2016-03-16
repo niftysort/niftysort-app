@@ -88,12 +88,41 @@ input[type=text] {
   resize: none;
 }
 
-// JT 'add' #attriubtes-query
-#attributes-query {
-  position: absolute;
-  top: 100px;
-  font-size:34px;
+@media (max-width: 991px){
+  .user-query{
+    top: 29px;
+  }
+  .user-query-auto{
+    top: 29px;
+  }
 }
+
+
+
+
+
+
+// JT 'add' #attriubtes-query
+@media (min-width:992px) {
+  #attributes-query {
+    position: absolute;
+    top: 100px;
+    font-size:34px;
+  }
+}
+// for desktop
+@media (max-width:991px) {
+  #attributes-query {
+    position: absolute;
+    top: 49px;
+    font-size:34px;
+  }
+}
+
+
+
+
+
 // JT 'add' #attriubtes-query
 
 .product-card-placeholder{
@@ -164,9 +193,10 @@ img.graph{
   width:100%;
 }
 
+//for tablet sm view
 @media (max-width:991px) {
   .header-block{
-    margin-top:43px !important;
+    margin-top:35px !important;
     width:100%;
     height:204px;
   }
@@ -174,7 +204,7 @@ img.graph{
 
 .header-block{
   // JT margin-top from 85 to 200
-  margin-top:200px;
+  margin-top:90px;
   // JT margin-top from 85 to 200
   width:100%;
   height:204px;
@@ -223,12 +253,14 @@ img#white-logo{
 }
 
 @media (max-width:991px) {
-  #query-input-contain{
-    margin-top:0px;
-    height:90px !important;
-    width:100%;
-  }
 }
+
+#query-input-contain{
+  margin-top:0px;
+  height:90px !important;
+  width:100%;
+}
+
 
 input#user-query-mobile{
   height:27px;
@@ -453,11 +485,14 @@ div#tesmptest{
   height:226px;
   width:226px;
   display:inline-block;
+  overflow: hidden;
 }
 
 img.product-thumbnail{
-  height:100%;
-  width:100%;
+  width:140%;
+  height:auto;
+  margin-left: -20%;
+  margin-top: -20%;
   border:0px !important;
 }
 
@@ -527,8 +562,8 @@ span.active-category{
   font-weight:300;
   display:block;
   // JT 'add' position: absolute and top: 90px
-  position: absolute;
-  top: 90px;
+  // position: absolute;
+  // top: 90px;
   // JT 'add' position: absolute and top: 90px
 }
 
@@ -552,11 +587,10 @@ div.brand{
 
 img#top-logo{
   margin-top:29px;
-  margin-left:46px;
 }
 
 div#attributes-panel{
-  margin-top:-21px;
+  margin-top:-4px;
   overflow:hidden;
   height:109px;
 }
@@ -607,7 +641,6 @@ span.attributes-label{
 }
 
 div.info-panel{
-  padding-left:50px;
   margin-top:13px;
   max-height:200px;
   overflow-y:hidden;
@@ -664,7 +697,6 @@ span.slider-desc-sm{
 
 div#slider-container-md{
   height:100px;
-  margin-left:50px;
   margin-top:55px;
 }
 

@@ -1,5 +1,5 @@
 
-app.factory('categoryService', function($http){
+app.factory('categoryService', function($http) {
 
   return {
 

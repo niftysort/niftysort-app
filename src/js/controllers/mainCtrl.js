@@ -151,7 +151,7 @@ var chart = new Highcharts.Chart({
 
   //MARKER AND CARD CLICK HANDLER
   $scope.renderTest = function(id) {
-    graphService.toggleSelected(id);
+    graphService.toggleSelected(id, $scope.topProducts);
   }
 
   //get products of category from backend and send to cache

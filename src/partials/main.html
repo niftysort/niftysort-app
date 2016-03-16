@@ -2,35 +2,48 @@
   <div class="header-bg"><img src="img/header-abstract.svg" id="header-bg-logo"><img src="img/test.svg" class="header-gradient"></div>
   <div class="container override-height">
     <div class="row override-height">
-      <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="header-block-mobile">
-              <div class="logo-block-mobile"><img src="img/white-logo.svg" id="white-logo-mobile">
-                <div id="brand-top-mobile">Nifty Sort</div>
-              </div>
-              <div id="query-input-contain-mobile">
 
-                <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
-                  <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
-                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Start by typing the product caterory here!"></input>
-                  <button class="hidden" type='submit'></button>
-                </form>
-
-                <form ng-submit="getGraph()" class="form-inline " autocomplete="off" ng-show="category">
-                  <!-- <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input> -->
-                  <button class="hidden" type='submit'></button>
-                </form>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-sm-6">
         <div class="row">
           <div class="col-md-12">
             <div class="brand"><img src="/img/logo.svg" id="top-logo"></div>
+
+
+        <!-- moving mobile input here JM -->
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="header-block-mobile">
+                    <!-- <div class="logo-block-mobile"><img src="img/white-logo.svg" id="white-logo-mobile">
+                      <div id="brand-top-mobile">Nifty Sort</div>
+                    </div> -->
+
+
+
+                    <div id="query-input-contain-mobile">
+                      <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
+                        <input type='text' class="user-query-auto" placeholder="{{autoComplete}}"></input>
+                        <input type='text' class="user-query" id="category-query-mobile" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Type Product Category.."></input>
+                        <button class="hidden" type='submit'></button>
+                      </form>
+
+                      <form ng-submit="getGraph()" class="form-inline " autocomplete="off" ng-show="category">
+                        <input type='text' class="user-query" id="attributes-query-mobile" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
+                        <button class="hidden" type='submit'></button>
+                      </form>
+
+                    </div>
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
             <div id="chart-contain" class="chart-container-style">
 
               <!-- <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:504px;height:400px;overflow:hidden;" aria-live="polite">

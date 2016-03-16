@@ -17,6 +17,18 @@ app.factory('categoryService', function($http){
 
     reset: () => {
     	return '';
+    },
+
+    setCursorCategory: () => {
+      setTimeout(function(){
+        document.getElementById("category-query").focus();
+      }, 50);
+    },
+
+    setCursorAttribute: () => {
+    	setTimeout(function(){
+        document.getElementById("attributes-query").focus();
+      }, 50);
     }
 
   }

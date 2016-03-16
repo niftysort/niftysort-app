@@ -31,10 +31,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
         id: resp.data._id,
         name: resp.data.name
       };
-
-      setTimeout(function(){
-        document.getElementById("attributes-query").focus();
-      }, 50);
+      categoryService.setCursorAttribute();
 
     }, function(err) {
     	$scope.category = null;
@@ -51,9 +48,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     $scope.attribute = '';
     $scope.products = productService.resetAll();
     $scope.topProducts = productService.resetTop();
-    setTimeout(function() {
-      document.getElementById("category-query").focus();
-    },50)
+    categoryService.setCursorCategory();
   }
 
   // ------------- *** for testing only *** --------------

@@ -1,5 +1,5 @@
 
-app.controller('mainCtrl', function(categoryService, graphService, productService, swalService, $scope){
+app.controller('mainCtrl', function(categoryService, graphService, productService, swalService, cardService, $scope){
   console.log('main controller loaded!');
 
 
@@ -138,8 +138,8 @@ var chart = new Highcharts.Chart({
         events: {
           click: function() {
             var id = this.id;
-            toggleSelected(id);
-            goToProduct(id);
+            graphService.toggleSelected(id, $scope.topProducts);
+            cardService.scrollTo(id);
           },
         }
       }
@@ -151,76 +151,8 @@ var chart = new Highcharts.Chart({
 
   //MARKER AND CARD CLICK HANDLER
   $scope.renderTest = function(id) {
-    toggleSelected(id);
+    graphService.toggleSelected(id);
   }
-
-  //FIND MARKER ONCE CLICKED, HIGHLIGHT BOTH CARD AND MARKER
-  function toggleSelected(id) {
-    var pointMod = $scope.topProducts.filter(function(val) {
-      return id == val.id;
-    });
-    var pointColor = pointMod[0].marker.fillColor;
-    toggleButtonHighlight(pointMod);
-    togglePointHighlight(pointColor);
-  }
-
-  function goToProduct(id) {
-    if(window.innerWidth > 768){
-      var offset = 340;
-    }else{
-      var offset = 460;
-    }
-    var $targetElem = $('div').find(`[data-id="${id}"]`)
-    $("body, html").animate({scrollTop: $targetElem.offset().top - offset}, "slow");
-  }
-
-  //remove class hola from all product cards and add only to correct card
-  function toggleButtonHighlight(pointMod) {
-    var products = document.getElementsByClassName('product-card');
-
-    for (var i = 0; i < products.length; i++) {
-      document.getElementsByClassName('product-card')[i].style.outline = '';
-    }
-
-    for (var i = 0; i < products.length; i++) {
-      if (document.getElementsByClassName('product-card')[i].dataset.id == pointMod[0].id) {
-        var rgb = getPathColor(products.length - 1 - i);
-        document.getElementsByClassName('product-card')[i].style.outline = '5px solid ' + rgb;
-      }
-    }
-  }
-
-  function togglePointHighlight(pointColor) {
-    var paths = document.getElementsByTagName("path");
-
-    for (var i = 0; i < paths.length; i++) {
-      paths[i].classList.remove('hello');
-      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '0');
-    }
-
-    for (var i = 0; i < paths.length; i++) {
-      var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
-      if (selectedPointColor === pointColor) {
-        var rgb = getPathColor(i);
-        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '5');
-        document.getElementsByTagName("path")[i].setAttribute('stroke', rgb);
-      }
-    }
-
-
-  }
-
-  function getPathColor(i) {
-    var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
-    var rgbArray = selectedPointColor.split(',').map(function(col) {
-      return col.replace(/[^0-9]/g, "");
-    });
-    var colorR = rgbArray[0] - 50;
-    var colorG = rgbArray[1] - 50;
-    var colorB = rgbArray[2];
-    return `rgb(${colorR},${colorG},${colorB})`;
-  }
-
 
   //get products of category from backend and send to cache
   $scope.getGraph = function(attribute) {

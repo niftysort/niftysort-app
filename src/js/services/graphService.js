@@ -1,5 +1,5 @@
 
-app.factory('graphService', function($http){
+app.factory('graphService', function($http, cardService, colorService){
 
 	return {
 
@@ -25,8 +25,37 @@ app.factory('graphService', function($http){
 		    });
 
 		    return topProducts;
-		}
+		},
 
+		//FIND MARKER ONCE CLICKED, HIGHLIGHT BOTH CARD AND MARKER
+		toggleSelected: (id, products) => {
+			console.log('toggle');
+			var pointMod = products.filter(function(val) {
+	      return id == val.id;
+	    });
+	    console.log(pointMod);
+	    var pointColor = pointMod[0].marker.fillColor;
+	    togglePointStroke(pointColor);
+	    cardService.toggleOutline(pointMod);
+		}
+	}
+
+	function togglePointStroke(pointColor) {
+		var paths = document.getElementsByTagName("path");
+
+    for (var i = 0; i < paths.length; i++) {
+      paths[i].classList.remove('hello');
+      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '0');
+    }
+
+    for (var i = 0; i < paths.length; i++) {
+      var selectedPointColor = document.getElementsByTagName("path")[i].getAttribute('fill');
+      if (selectedPointColor === pointColor) {
+        var rgb = colorService.getPathColor(i);
+        document.getElementsByTagName("path")[i].setAttribute('stroke-width', '5');
+        document.getElementsByTagName("path")[i].setAttribute('stroke', rgb);
+      }
+    }
 	}
 
 })

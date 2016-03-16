@@ -79,7 +79,7 @@
 
                 <form ng-submit="getCategory(searchCategory)" class="form-inline " autocomplete="off" ng-show="!category">
                   <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
-                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Enter Category" required></input>
+                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill($event.keyCode, searchCategory)" maxlength="40" autofocus placeholder="Enter Category" required></input>
                   <button class="hidden" type='submit'></button>
                 </form>
 

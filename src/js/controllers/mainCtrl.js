@@ -159,10 +159,17 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   	})
   }
 
-  $scope.autoFill = categoryInput => {
+  $scope.autoFill = (keyCode, categoryInput) => {
     // on right arrow key up
-    if (event.keyCode === 39) {
-      this.searchCategory = $scope.autoComplete;
+    console.log(keyCode);
+    if (keyCode === 39) {
+      $scope.searchCategory = $scope.autoComplete;
+      console.log($scope.autoComplete);
+    }
+
+    // Enter for Safari and Mobile
+    if (keyCode === 13) {
+      $scope.getCategory(categoryInput);
     }
 
     if (categoryInput) {

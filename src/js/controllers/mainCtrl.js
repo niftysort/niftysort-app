@@ -191,6 +191,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     $scope.products = category.values;
     let products = category.values;
     let productsInfo = getProductInfo(products);
+    if (!productsInfo) return;
     let topProducts = graphService.assignPointProperties(productsInfo);
     $scope.topProducts = productService.removeHiddenCharacters(topProducts);
     renderGraph($scope.topProducts);
@@ -203,7 +204,6 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     chart.series[0].setData([{}]);
     let products = $scope.products;
     let productsInfo = getProductInfo(products, minPrice, maxPrice);
-    console.log(productsInfo);
     let topProducts = graphService.assignPointProperties(productsInfo);
     $scope.topProducts = productService.removeHiddenCharacters(topProducts);
     renderGraph($scope.topProducts);
@@ -211,7 +211,13 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
 
   function getProductInfo(products, minPrice, maxPrice) {
     let permittedProducts = productService.removeZeroValueProducts(products);
-    if (!permittedProducts.length) return swalService.badAttribute();
+    if (!permittedProducts.length) {
+      swalService.badAttribute();
+      $scope.attribute = $scope.prevAttribute;
+      return null;
+    }
+    $scope.prevAttribute = $scope.attribute;
+    console.log($scope.prevAttribute);
     let minX = productService.getMinX(permittedProducts);
     let maxX = productService.getMaxX(permittedProducts);
     let rangedProducts;

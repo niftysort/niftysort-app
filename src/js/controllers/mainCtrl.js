@@ -154,6 +154,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   	.then( resp => {
       document.activeElement.blur(); //on iOS make keyboard hide
       graphService.removePointStroke();
+      console.log(resp.data);
       cacheCategoryData(resp.data);
   	}, err => {
   		$scope.data = [];
@@ -202,6 +203,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     chart.series[0].setData([{}]);
     let products = $scope.products;
     let productsInfo = getProductInfo(products, minPrice, maxPrice);
+    console.log(productsInfo);
     let topProducts = graphService.assignPointProperties(productsInfo);
     $scope.topProducts = productService.removeHiddenCharacters(topProducts);
     renderGraph($scope.topProducts);
@@ -209,6 +211,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
 
   function getProductInfo(products, minPrice, maxPrice) {
     let permittedProducts = productService.removeZeroValueProducts(products);
+    if (!permittedProducts.length) return swalService.badAttribute();
     let minX = productService.getMinX(permittedProducts);
     let maxX = productService.getMaxX(permittedProducts);
     let rangedProducts;

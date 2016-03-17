@@ -2,9 +2,9 @@ app.factory('cardService', function(colorService) {
 	return {
 		scrollTo: id => {
 			let offset;
-			if(window.innerWidth > 768){
+			if (window.innerWidth > 768){
 	      offset = 330;
-	    }else{
+	    } else {
 	      offset = 20;
 	    }
 	    let $targetElem = $('div').find(`[data-id="${id}"]`)

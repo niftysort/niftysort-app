@@ -123,8 +123,8 @@
         <!-- TODO: use this when suggested attributes poplulated dynamically -->
 
         <div class="visible-sm-block slider-container-sm">
-          <span id="slider-label-sm">Adjust Price Range</span>
-          <div ng-show="products">
+          <span ng-if="products" id="slider-label-sm">Adjust Price Range</span>
+          <div ng-if="products">
             <rzslider
             rz-slider-model="slider.min"
             rz-slider-high="slider.max"

@@ -153,6 +153,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   	graphService.retrieveGraphData($scope.category.id, attribute)
   	.then( resp => {
       document.activeElement.blur(); //on iOS make keyboard hide
+      graphService.removePointStroke();
       cacheCategoryData(resp.data);
   	}, err => {
   		$scope.data = [];

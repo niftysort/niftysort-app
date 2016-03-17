@@ -33,12 +33,20 @@ app.factory('graphService', function($http, cardService, colorService){
 	  	});
 	    let pointColor = pointMod[0].marker.fillColor;
 	    togglePointStroke(pointColor);
-	    cardService.toggleOutline(pointMod);
+	    cardService.removeOutline();
+	    cardService.addOutline(pointMod);
+		},
+		removePointStroke: () => {
+			let paths = pathsDOM()
+	    for (let i = 0; i < paths.length; i++) {
+	      paths[i].classList.remove('hello');
+	      document.getElementsByTagName("path")[i].setAttribute('stroke-width', '0');
+	    }
 		}
 	}
 
 	function togglePointStroke(pointColor) {
-		let paths = document.getElementsByTagName("path");
+		let paths = pathsDOM()
 
     for (let i = 0; i < paths.length; i++) {
       paths[i].classList.remove('hello');
@@ -54,5 +62,11 @@ app.factory('graphService', function($http, cardService, colorService){
       }
     }
 	}
+
+	function pathsDOM() {
+		return document.getElementsByTagName("path");
+	}
+
+	removePointStroke
 
 })

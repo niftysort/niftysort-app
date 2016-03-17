@@ -28,10 +28,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
       categoryService.setCursorAttribute();
 
     }, err => {
-    	$scope.category = null;
-      // TODO: Handle error with UI, notify user that attribute is not recommended.
-      // swalErrorAttribute()
-      swalErrorCategory();
+      errorCategory();
     })
   };
 
@@ -49,9 +46,10 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   $scope.attributes = ["comfortable", "light", "heavy", "durable", "stylish", "sound", "loud", "noise", "wear", "ears"];
   // ------------- *** for testing only *** --------------
 
-  function swalErrorCategory() {
+  function errorCategory() {
     swalService.errorCategory();
     $scope.searchCategory = categoryService.clearInput();
+    $scope.category = categoryService.reset();
   }
 
   function swalNoCategories() {

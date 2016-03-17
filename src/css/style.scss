@@ -90,7 +90,7 @@ path, rect {
   }
 }
 
-@media (max-width: 991px){
+@media (min-width:768px) and (max-width: 991px){
   .user-query{
     top: 29px;
   }
@@ -101,32 +101,39 @@ path, rect {
 
 @media (max-width:767px){
 
+
   .user-query{
-    height: 29px;
+    height: auto;
     width: 100%;
-    font-size: 20px;
     border: 0px;
     background-color: transparent;
-    font-family: 'Open Sans', sans-serif;
     color: white;
     outline: none;
     z-index: 2;
-    overflow: hidden;
-    resize: none;
+    // overflow: hidden;
+    // resize: none;
+    font-size: 30px;
+    position: absolute;
+    left: 0px;
+    top: 25px;
+    display: block;
   }
 
   .user-query-auto{
-    height: 29px;
+    height: auto;
     width: 100%;
-    font-size: 20px;
     border: 0px;
     background-color: transparent;
-    font-family: 'Open Sans', sans-serif;
-    color: grey;
+    color: white;
     outline: none;
     z-index: 1;
-    overflow: hidden;
-    resize: none;
+    // overflow: hidden;
+    // resize: none;
+    font-size: 30px;
+    top:25px;
+    position: absolute;
+    left: 0px;
+    display: block;
   }
 
 
@@ -172,7 +179,7 @@ path, rect {
 }
 
 span.card-text-description > ul{
-  padding-left: 10px;
+  padding-left: 0px;
 }
 
 span.card-text-description > ul > li{
@@ -284,9 +291,19 @@ img#white-logo{
   height:15px;
 }
 
-#query-input-contain-mobile{
-  margin-top:2px;
-  width:100%;
+@media (min-width:768px){
+  #query-input-contain-mobile{
+    margin-top:2px;
+    width:100%;
+  }
+}
+@media (max-width:767px){
+  #query-input-contain-mobile{
+    margin-top:2px;
+    width:100%;
+    position: relative;
+    height: 75px;
+  }
 }
 
 @media (max-width:991px) {
@@ -493,11 +510,11 @@ div#container {
 }
 
 #list-top-spacer-xs{
-  height:385px;
+  height:150px;
 }
 
 .list-container{
-  height:150px;
+
 }
 
 div#tesmptest{
@@ -506,6 +523,9 @@ div#tesmptest{
   margin-top:100px;
 }
 
+
+
+@media (min-width:768px){
 .product-card{
   height:228px;
   background-color:rgb(234,233,233);
@@ -513,6 +533,7 @@ div#tesmptest{
   position:relative;
   border:1px solid #D8D8D8;
   box-shadow:2px 2px 13px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 .card-thumbnail{
@@ -537,6 +558,7 @@ img.product-thumbnail{
   position:absolute;
   padding-top:6px;
   padding-left:10px;
+
 }
 
 span.card-title{
@@ -562,12 +584,84 @@ span.card-text-description{
   padding-right:15px;
 }
 
+}
+
+
+@media (max-width:767px){
+  .product-card{
+    height: 310px;
+    background-color: #eae9e9;
+    margin-top: 20px;
+    position: relative;
+    border: 1px solid #D8D8D8;
+    box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .card-thumbnail{
+    height: 160px;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+  }
+
+  img.product-thumbnail{
+    width: 100%;
+    height: auto;
+    margin-top: -30%;
+    border: 0px !important;
+  }
+
+  .card-description{
+    display: block;
+    // padding-top: 6px;
+    // padding-left: 10px;
+    padding: 10px;
+  }
+
+  span.card-title{
+    color: #585858;
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    display: block;
+  }
+
+  .card-sub-title{
+    font-size: 9px;
+    color: grey;
+    display: block;
+    margin-top: 2px;
+  }
+
+  span.card-text-description{
+    display: block;
+    margin-top: 9px;
+    font-size: 11px;
+    color: #6d6d6d;
+  }
+
+  // span.card-description ul {
+  //   padding: 0px;
+  // }
+}
+
+
+
+
+
+
 div#sticky-test{
   position:fixed;
   top:0;
   left:0;
   z-index:2;
   width:100%;
+}
+
+@media (max-width:767px){
+  div#sticky-test{
+    position:relative;
+  }
 }
 
 div#list-test.row{
@@ -612,11 +706,23 @@ span.active-category{
     height:90px;
   }
 }
-// @media (max-width:768px){
-//   div.brand{
-//     height:90px;
-//   }
-// }
+@media (max-width:767px){
+  div.brand{
+    background-color: black;
+    padding-bottom: 15px;
+  }
+  span#tagline{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    color: white;
+    font-style: italic;
+    display: inline-block;
+    top: 9px;
+    position: relative;
+    letter-spacing: 1px;
+    margin-left: 6%;
+  }
+}
 
 @media (max-width:991px) {
   img#top-logo{
@@ -627,9 +733,9 @@ span.active-category{
 }
 @media (max-width:767px) {
   img#top-logo{
-    margin-top:11px !important;
-    margin-left:0px !important;
-    height:44px;
+    margin-top:15px !important;
+    margin-left:15px !important;
+    height:24px;
   }
 }
 

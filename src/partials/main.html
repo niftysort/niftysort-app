@@ -6,47 +6,49 @@
       <div class="col-sm-6">
         <div class="row">
           <div class="col-md-12">
-            <div class="brand"><img src="/img/logo.svg" id="top-logo"></div>
-
-
-        <!-- moving mobile input here JM -->
-            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="header-block-mobile">
-                    <!-- <div class="logo-block-mobile"><img src="img/white-logo.svg" id="white-logo-mobile">
-                      <div id="brand-top-mobile">Nifty Sort</div>
-                    </div> -->
-
-
-
-                    <div id="query-input-contain-mobile">
-                      <form ng-submit="getCategory()" class="form-inline " autocomplete="off" ng-show="!category">
-                        <input type='text' class="user-query-auto" placeholder="{{autoComplete}}"></input>
-                        <input type='text' class="user-query" id="category-query-mobile" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Type Product Category.."></input>
-                        <button class="hidden" type='submit'></button>
-                      </form>
-
-                      <form ng-submit="getGraph()" class="form-inline " autocomplete="off" ng-show="category">
-                        <input type='text' class="user-query" id="attributes-query-mobile" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
-                        <button class="hidden" type='submit'></button>
-                      </form>
-
-                    </div>
-
-
-
-
-                  </div>
-                </div>
+            <div class="row">
+              <div class="brand">
+                <img src="/img/logo.svg" id="top-logo">
+                <span id="tagline">Finding Perfect Products</span>
               </div>
             </div>
+            <!-- moving mobile input here JM -->
+            <div class="row">
+              <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+
+                <div class="header-block-mobile">
+                  <!-- <div class="logo-block-mobile"><img src="img/white-logo.svg" id="white-logo-mobile">
+                  <div id="brand-top-mobile">Nifty Sort</div>
+                </div> -->
+
+                <div id="query-input-contain-mobile">
+
+                  <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
+
+                  <form ng-submit="getCategory(searchCategory)" class="form-inline " autocomplete="off" ng-show="!category">
+                    <input type='text' class="user-query-auto" placeholder="{{autoComplete}}"></input>
+                    <input type='text' class="user-query" id="category-query-mobile" ng-model="searchCategory" ng-keyup="autoFill($event.keyCode, searchCategory)" maxlength="40" autofocus autocorrect="off" autocapitalize="none" placeholder="Product Category.." ></input>
+                    <button class="hidden" type='submit'></button>
+                  </form>
+
+                  <form ng-submit="getGraph(attribute)" class="form-inline " autocomplete="off" ng-show="category">
+                    <input type='text' class="user-query" id="attributes-query-mobile" ng-model="attribute" maxlength="40" autofocus autocorrect="off" autocapitalize="none" placeholder="Desired Attributes.."></input>
+                    <button class="hidden" type='submit'></button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
 
 
+          <div class="row">
 
-            <div id="chart-contain" class="chart-container-style">
+            <div class="col-xs-12">
 
-              <!-- <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:504px;height:400px;overflow:hidden;" aria-live="polite">
+              <div id="chart-contain" class="chart-container-style">
+
+                <!-- <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:504px;height:400px;overflow:hidden;" aria-live="polite">
               </div> -->
               <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:100%;height:100%;overflow:hidden;" aria-live="polite">
               </div>
@@ -65,76 +67,80 @@
               <div id="bottom-right-label" class="chart-labels"><span class="graph-label-text">CHEAP! </span></div>
             </div>
 
-            <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products"><span class="info-title">Adjust Price Range</span>
-              <!-- Add Slider Feature -->
-              <rzslider
-              rz-slider-model="slider.min"
-              rz-slider-high="slider.max"
-              rz-slider-options="slider.options">
-            </rzslider>
-            <!-- Add Slider Feature -->
-            </div>
-            <div class="info-panel"><span class="info-title">How does this work?</span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. (LEARN MORE)</span></div>
-
           </div>
+
         </div>
+
+        <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products"><span class="info-title">Adjust Price Range</span>
+          <!-- Add Slider Feature -->
+          <rzslider
+          rz-slider-model="slider.min"
+          rz-slider-high="slider.max"
+          rz-slider-options="slider.options">
+        </rzslider>
+        <!-- Add Slider Feature -->
       </div>
-      <div class="col-sm-6">
-        <div class="row">
-          <div class="col-sm-12 hidden-xs">
-            <div class="header-block">
+      <div class="info-panel"><span class="info-title">How does this work?</span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. (LEARN MORE)</span></div>
 
-              <div id="query-input-contain">
-
-                <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
-
-                <form ng-submit="getCategory(searchCategory)" class="form-inline " autocomplete="off" ng-show="!category">
-                  <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
-                  <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill(searchCategory)" maxlength="40" autofocus placeholder="Enter Category" required></input>
-                  <button class="hidden" type='submit'></button>
-                </form>
-
-                <form ng-submit="getGraph(attribute)" class="form-inline " autocomplete="off" ng-show="category">
-                  <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
-                  <button class="hidden" type='submit'></button>
-                </form>
-
-
-              </div>
-
-              <div id="attributes-panel" ng-show="!category">
-                <span class="attributes-label">Suggested: </span>
-                <span class="tag" ng-repeat="cat in categoryNames" ng-click="getCategory(cat)">{{cat}}</span>
-              </div>
-
-              <!-- TODO: use this when suggested attributes poplulated dynamically -->
-
-              <div id="attributes-panel" ng-show="category">
-                <span class="attributes-label">Suggested: </span>
-                <span class="tag" ng-repeat="att in attributes" ng-click="getGraph(att)">{{att}}</span>
-              </div>
-
-              <!-- TODO: use this when suggested attributes poplulated dynamically -->
-
-              <div class="visible-sm-block slider-container-sm">
-                <span id="slider-label-sm">Adjust Price Range</span>
-                <div ng-show="products">
-                  <rzslider
-                    rz-slider-model="slider.min"
-                    rz-slider-high="slider.max"
-                    rz-slider-options="slider.options">
-                  </rzslider>
-                </div>
-                <!-- <img src="/img/slider-sm-placeholder.svg" id="placeholder-sm"> -->
-                <span ng-hide="products" class="slider-desc-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. </span>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
+</div>
+<div class="col-sm-6">
+  <div class="row">
+    <div class="col-sm-12 hidden-xs">
+      <div class="header-block">
+
+        <div id="query-input-contain">
+
+          <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
+
+          <form ng-submit="getCategory(searchCategory)" class="form-inline " autocomplete="off" ng-show="!category">
+            <input type='text' placeholder="{{autoComplete}}" class="user-query-auto"></input>
+            <input type='text' class="user-query" id="category-query" ng-model="searchCategory" ng-keyup="autoFill($event.keyCode, searchCategory)" maxlength="40" autofocus placeholder="Enter Category" required></input>
+            <button class="hidden" type='submit'></button>
+          </form>
+
+          <form ng-submit="getGraph(attribute)" class="form-inline " autocomplete="off" ng-show="category">
+            <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
+            <button class="hidden" type='submit'></button>
+          </form>
+
+
+        </div>
+
+        <div id="attributes-panel" ng-show="!category">
+          <span class="attributes-label">Suggested: </span>
+          <span class="tag" ng-repeat="cat in categoryNames" ng-click="getCategory(cat)">{{cat}}</span>
+        </div>
+
+        <!-- TODO: use this when suggested attributes poplulated dynamically -->
+
+        <div id="attributes-panel" ng-show="category">
+          <span class="attributes-label">Suggested: </span>
+          <span class="tag" ng-repeat="att in attributes" ng-click="getGraph(att)">{{att}}</span>
+        </div>
+
+        <!-- TODO: use this when suggested attributes poplulated dynamically -->
+
+        <div class="visible-sm-block slider-container-sm">
+          <span id="slider-label-sm">Adjust Price Range</span>
+          <div ng-show="products">
+            <rzslider
+            rz-slider-model="slider.min"
+            rz-slider-high="slider.max"
+            rz-slider-options="slider.options">
+          </rzslider>
+        </div>
+        <!-- <img src="/img/slider-sm-placeholder.svg" id="placeholder-sm"> -->
+        <span ng-hide="products" class="slider-desc-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="container">
   <div class="row" id="list-test">
@@ -147,13 +153,13 @@
           <img src="img/card-placeholder.svg" alt="">
         </div>
       </div>
-        <!-- <div class="product-card" ng-repeat="product in topProducts | limitTo: 10" data-id={{product.id}} ng-click="renderTest(product.id)"> -->
+      <!-- <div class="product-card" ng-repeat="product in topProducts | limitTo: 10" data-id={{product.id}} ng-click="renderTest(product.id)"> -->
 
 
 
       <div ng-show="topProducts" class="list-container">
         <div class="product-card" ng-repeat="product in topProducts" data-id={{product.id}} ng-click="renderTest(product.id)">
-          <div class="card-thumbnail" id={{product.id}}><img src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
+          <div class="card-thumbnail" id={{product.id}}><img ng-src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
           <div class="card-description">
             <div class="card-title-block">
               <span class="card-title" ng-if="product.name.length > 60">{{product.name.substring(0,60)}}...</span>
@@ -172,21 +178,21 @@
         </div>
       </div>
 
-        <!-- <div id="top-product" class="product-card">
-          <div class="card-thumbnail"><img src="img/prod_placeholder.jpeg" class="product-thumbnail"></div>
-          <div class="card-description">
-            <div class="card-title-block"><span class="card-title">Sony MDX-3400 Headphones </span><span class="card-sub-title">PRICE: $299.99&nbsp; AVG: 4/5 STARS </span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. </span></div>
-          </div>
-        </div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-        <div class="product-card"></div>
-      </div> -->
+      <!-- <div id="top-product" class="product-card">
+      <div class="card-thumbnail"><img src="img/prod_placeholder.jpeg" class="product-thumbnail"></div>
+      <div class="card-description">
+      <div class="card-title-block"><span class="card-title">Sony MDX-3400 Headphones </span><span class="card-sub-title">PRICE: $299.99&nbsp; AVG: 4/5 STARS </span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. </span></div>
     </div>
   </div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+  <div class="product-card"></div>
+</div> -->
+</div>
+</div>
 </div>

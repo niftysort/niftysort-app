@@ -73,14 +73,19 @@
 
         </div>
 
-        <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products"><span class="info-title">Adjust Price Range</span>
+        <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products">
+
+          <span class="info-title">Adjust Price Range</span>
+          <div id="slider-sub-container">
+            <!-- Add Slider Feature -->
+            <rzslider
+            rz-slider-model="slider.min"
+            rz-slider-high="slider.max"
+            rz-slider-options="slider.options">
+          </rzslider>
           <!-- Add Slider Feature -->
-          <rzslider
-          rz-slider-model="slider.min"
-          rz-slider-high="slider.max"
-          rz-slider-options="slider.options">
-        </rzslider>
-        <!-- Add Slider Feature -->
+        </div>
+
       </div>
       <div class="info-panel"><span class="info-title">How does this work?</span><span class="card-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer condimentum vitae ipsum sed blandit. Morbi quis eleifend tellus. Sed feugiat euismod elit, et ultrices velit semper rhoncus. Curabitur purus libero, suscipit sed molestie et, dapibus vitae metus. Fusce ut blandit nisl. Fusce purus purus, sodales sed est efficitur, porttitor mollis sem. Integer eu vehicula purus. (LEARN MORE)</span></div>
 
@@ -161,7 +166,9 @@
 
       <div ng-show="topProducts" class="list-container">
         <div class="product-card" ng-repeat="product in topProducts" data-id={{product.id}} ng-click="renderTest(product.id)">
-          <div class="card-thumbnail" id={{product.id}}><img ng-src={{product.info.imgLarge[0]}} class="product-thumbnail"></div>
+          <div class="card-thumbnail" id={{product.id}}>
+            <img ng-src={{product.info.imgLarge[0]}} class="product-thumbnail">
+          </div>
           <div class="card-description">
             <div class="card-title-block">
               <span class="card-title" ng-if="product.name.length > 60">{{product.name.substring(0,60)}}...</span>

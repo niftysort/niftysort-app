@@ -1,10 +1,21 @@
 app.controller('mainCtrl', function(categoryService, graphService, productService, swalService, cardService, $scope){
 
   //SET NUM OF PLACHOLDER CARDS
-  $scope.numOfPlacholders = 10;
-  $scope.getPlaceholders = num => {
-    return new Array(num);
+  // $scope.numOfPlacholders = 10;
+  // $scope.getPlaceholders = num => {
+  //   $scope.fadeIn = [];
+  //   for(let i = 0; i <= num; i++){
+  //     $scope.fadeIn.push(('fade-in '+'i'+'0'+i));
+  //   }
+  //   return new Array(num);
+  // }
+
+  var fadeIn = [];
+  for(let i = 1; i <= 10; i++){
+    fadeIn.push({ style: 'fade-in '+'i'+'0'+i });
   }
+  $scope.fadeInCards = fadeIn;
+  console.log($scope.fadeInCards);
 
   //GET ALL CATEGORIES FROM BACKEND ON PAGE LOAD
   categoryService.retrieveAllCategories()
@@ -64,6 +75,9 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
       renderTo: 'container',
       type: 'scatter',
       zoomType: ''
+    },
+    tooltip:{
+      borderWidth: 0
     },
     credits: {
       enabled: false

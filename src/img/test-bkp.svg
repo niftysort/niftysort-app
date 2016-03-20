@@ -4,8 +4,8 @@
     <title>Background</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <radialGradient cx="15.2493925%" cy="119.589584%" fx="15.2493925%" fy="119.589584%" r="177.607936%" id="radialGradient-1">
-            <stop stop-color="#6E76FF" offset="0%"></stop>
+        <radialGradient cx="17.8174098%" cy="132.603216%" fx="17.8174098%" fy="132.603216%" r="159.793092%" id="radialGradient-1">
+            <stop stop-color="#8990FF" offset="0%"></stop>
             <stop stop-color="#FF8ED3" offset="100%"></stop>
         </radialGradient>
     </defs>

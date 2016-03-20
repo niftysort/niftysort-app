@@ -1,5 +1,8 @@
 <div id="sticky-test" class="override-height">
-  <div class="header-bg"><img src="img/header-abstract.svg" id="header-bg-logo"><img src="img/test.svg" class="header-gradient"></div>
+  <div class="header-bg">
+    <img src="img/header-abstract.svg" class="fade-in i02" id="header-bg-logo">
+    <!-- <img src="img/test.svg" class="header-gradient"> -->
+  </div>
   <div class="container override-height">
     <div class="row override-height">
 
@@ -8,8 +11,8 @@
           <div class="col-md-12">
             <div class="row">
               <div class="brand">
-                <img src="/img/logo.svg" id="top-logo">
-                <div class="tagline-container">
+                <img src="/img/logo.svg" id="top-logo" class="fade-in i03">
+                <div class="tagline-container fade-in i04">
                   <span id="tagline">Finding Perfect Products</span>
                 </div>
               </div>
@@ -48,11 +51,11 @@
 
             <div class="col-xs-12">
 
-              <div id="chart-contain" class="chart-container-style">
+              <div id="chart-contain" class="chart-container-style fade-in i01">
 
                 <!-- <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:504px;height:400px;overflow:hidden;" aria-live="polite">
               </div> -->
-              <div ng-hide="topProducts" id="base_hype_container" style="margin:auto;position:relative;width:100%;height:100%;overflow:hidden;" aria-live="polite">
+              <div ng-hide="topProducts" id="export_hype_container" style="margin:auto;position:relative;width:100%;height:100%;overflow:hidden;" aria-live="polite">
               </div>
 
 
@@ -97,7 +100,7 @@
     <div class="col-sm-12 hidden-xs">
       <div class="header-block">
 
-        <div id="query-input-contain">
+        <div id="query-input-contain" class="animated">
 
           <span ng-show="category" class="active-category">{{category.name}} <sup class="categoryX" ng-click="newCategory()"> x</sup></span>
 
@@ -108,7 +111,7 @@
           </form>
 
           <form ng-submit="getGraph(attribute)" class="form-inline " autocomplete="off" ng-show="category">
-            <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="What attributes are you looking for?"></input>
+            <input type='text' class="user-query" id="attributes-query" ng-model="attribute" maxlength="40" autofocus placeholder="Desired Attributes..."></input>
             <button class="hidden" type='submit'></button>
           </form>
 
@@ -156,7 +159,7 @@
       <div class="hidden-xs hidden-sm" id="list-top-spacer-md"></div>
       <div class="hidden-sm hidden-md hidden-lg" id="list-top-spacer-xs"></div>
       <div ng-show="!topProducts" class="list-container">
-        <div ng-repeat="i in getPlaceholders(numOfPlacholders) track by $index" class="product-card-placeholder">
+        <div ng-repeat="card in fadeInCards track by $index" class="product-card-placeholder {{ card.style }}">
           <img src="img/card-placeholder.svg" alt="">
         </div>
       </div>

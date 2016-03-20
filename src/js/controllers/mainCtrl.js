@@ -39,10 +39,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
       categoryService.setCursorAttribute();
 
     }, err => {
-    	$scope.category = null;
-      // TODO: Handle error with UI, notify user that attribute is not recommended.
-      // swalErrorAttribute()
-      swalErrorCategory();
+      errorCategory();
     })
   };
 
@@ -60,9 +57,10 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   $scope.attributes = ["comfortable", "light", "heavy", "durable", "stylish", "sound", "loud", "noise", "wear", "ears"];
   // ------------- *** for testing only *** --------------
 
-  function swalErrorCategory() {
+  function errorCategory() {
     swalService.errorCategory();
     $scope.searchCategory = categoryService.clearInput();
+    $scope.category = categoryService.reset();
   }
 
   function swalNoCategories() {
@@ -167,6 +165,8 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
   	graphService.retrieveGraphData($scope.category.id, attribute)
   	.then( resp => {
       document.activeElement.blur(); //on iOS make keyboard hide
+      graphService.removePointStroke();
+      console.log(resp.data);
       cacheCategoryData(resp.data);
   	}, err => {
   		$scope.data = [];
@@ -203,6 +203,7 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
     $scope.products = category.values;
     let products = category.values;
     let productsInfo = getProductInfo(products);
+    if (!productsInfo) return;
     let topProducts = graphService.assignPointProperties(productsInfo);
     $scope.topProducts = productService.removeHiddenCharacters(topProducts);
     renderGraph($scope.topProducts);
@@ -222,6 +223,13 @@ app.controller('mainCtrl', function(categoryService, graphService, productServic
 
   function getProductInfo(products, minPrice, maxPrice) {
     let permittedProducts = productService.removeZeroValueProducts(products);
+    if (!permittedProducts.length) {
+      swalService.badAttribute();
+      $scope.attribute = $scope.prevAttribute;
+      return null;
+    }
+    $scope.prevAttribute = $scope.attribute;
+    console.log($scope.prevAttribute);
     let minX = productService.getMinX(permittedProducts);
     let maxX = productService.getMaxX(permittedProducts);
     let rangedProducts;

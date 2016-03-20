@@ -76,6 +76,7 @@
 
         </div>
 
+
         <div class="hidden-xs hidden-sm" id="slider-container-md" ng-if="products">
 
           <span class="info-title">Adjust Price Range</span>
@@ -133,8 +134,8 @@
         <!-- TODO: use this when suggested attributes poplulated dynamically -->
 
         <div class="visible-sm-block slider-container-sm">
-          <span id="slider-label-sm">Adjust Price Range</span>
-          <div ng-show="products">
+          <span ng-if="topProducts" id="slider-label-sm">Adjust Price Range</span>
+          <div ng-if="topProducts">
             <rzslider
             rz-slider-model="slider.min"
             rz-slider-high="slider.max"

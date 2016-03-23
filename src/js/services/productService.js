@@ -1,6 +1,6 @@
 app.factory('productService', function() {
 
-  return { 
+  return {
 
     removeZeroValueProducts: products => {
       return products.filter( val => {
@@ -10,19 +10,21 @@ app.factory('productService', function() {
 
     removeHiddenCharacters: topProducts => {
       topProducts.forEach( product => {
-        product.info.features = product.info.features.map( feature => {
-          let words = feature.replace(/[^\x00-\x7F]/g, "")
-            .split(/,?\s+/);
-          // Some sentences from amazon features have no spaces between words.
-          words = words.map( word => {
-            if (word.length > 30) {
-              return '';
-            } else {
-              return word;
-            }
+        if(product.info.features) {
+          product.info.features = product.info.features.map( feature => {
+            let words = feature.replace(/[^\x00-\x7F]/g, "")
+              .split(/,?\s+/);
+            // Some sentences from amazon features have no spaces between words.
+            words = words.map( word => {
+              if (word.length > 30) {
+                return '';
+              } else {
+                return word;
+              }
+            });
+            return words.join(' ');
           });
-          return words.join(' ');
-        });
+        }
       });
 
       return topProducts;
@@ -69,6 +71,6 @@ app.factory('productService', function() {
     resetTop: () => {
       return null;
     }
-    
+
   }
 });

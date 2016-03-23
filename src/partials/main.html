@@ -171,7 +171,7 @@
       <div ng-show="topProducts" class="list-container">
         <div class="product-card" ng-repeat="product in topProducts" data-id={{product.id}} ng-click="renderTest(product.id)">
           <div class="card-thumbnail" id={{product.id}}>
-            <img ng-src={{product.info.imgLarge[0]}} class="product-thumbnail">
+            <img ng-src={{product.info.imageLink}} class="product-thumbnail">
           </div>
           <div class="card-description">
             <div class="card-title-block">

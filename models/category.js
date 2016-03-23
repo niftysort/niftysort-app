@@ -35,7 +35,7 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 		console.log(adjustedPerProductScore);
 
 		var d3Values = {
-			name: product.info.name,
+			name: product.info.abbreviatedTitle,
 			x: -product.info.price, // reversed x and y and format price negative
 			y: adjustedPerProductScore,
 			xR: product.info.price,

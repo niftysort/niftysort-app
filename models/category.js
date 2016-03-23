@@ -28,10 +28,11 @@ categorySchema.statics.getD3DataByAttribute = function(categoryId, attribute, ca
 		var totalReviews = product.reviews.length;
 		var aggregateAttributeScore = product.reviews.reduce(function(weightedAttributeCounter, review) {
 			var attributeMatchCount = review.text.match(new RegExp(attribute, "gi"));
-			var attributeWeightedScore = (attributeMatchCount ? attributeMatchCount.length : 0) * review.stars;
+			var attributeWeightedScore = (attributeMatchCount ? attributeMatchCount.length : 0) * review.starRatingNum;
 			return weightedAttributeCounter += attributeWeightedScore;
 		},0);
 		var adjustedPerProductScore = aggregateAttributeScore/totalReviews;
+		console.log(adjustedPerProductScore);
 
 		var d3Values = {
 			name: product.info.name,
